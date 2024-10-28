@@ -12,6 +12,7 @@ using Wpf.Ui.Common.Interfaces;
 using Awake.Views.Windows;
 using System.Windows.Controls;
 using Awake.Services;
+using System.Security.Policy;
 
 
 namespace Awake.Views.Pages
@@ -93,7 +94,9 @@ namespace Awake.Views.Pages
 
             string msg12 = process1.StandardOutput.ReadToEnd();
 
-            InitializeData();
+            CommiteCollection.Clear();
+            CommiteCollection2.Clear();
+            InitializeData(30);
             InitializeComponent();
 
             lblCurrHash.Content = currHash;
@@ -155,7 +158,9 @@ namespace Awake.Views.Pages
 
             string msg2 = process.StandardOutput.ReadToEnd();
 
-            InitializeData();
+            CommiteCollection.Clear();
+            CommiteCollection2.Clear();
+            InitializeData(30);
             InitializeComponent();
 
             lblCurrHash.Content = currHash;
@@ -182,7 +187,7 @@ namespace Awake.Views.Pages
 
             commit2.ItemsSource = CommiteCollection2;
         }
-        private void InitializeData()
+        private void InitializeData(int setting_show)
         {
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -197,6 +202,7 @@ namespace Awake.Views.Pages
             process.StartInfo = startInfo;
 
             int idx = 0;
+            int number_show = 0;
             commits = new List<CommitItem>();
             process.ErrorDataReceived += new DataReceivedEventHandler(delegate (object sender, DataReceivedEventArgs e)
             {
@@ -212,20 +218,24 @@ namespace Awake.Views.Pages
                     return;
                 }
 
-                item1.Hash = itemarr[0];
-                item1.Message = itemarr[1];
-                item1.Date = itemarr[2];
-                item1.Id = idx++;
-                item1.Enable = true;
-                item1.Checked = false;
-
-                if (currHash == item1.Hash)
+                if (number_show != setting_show) 
                 {
-                    item1.Enable = false;
-                    item1.Checked = true;
-                }
+                    number_show += 1;
+                    item1.Hash = itemarr[0];
+                    item1.Message = itemarr[1];
+                    item1.Date = itemarr[2];
+                    item1.Id = idx++;
+                    item1.Enable = true;
+                    item1.Checked = false;
 
-                commits.Add(item1);
+                    if (currHash == item1.Hash)
+                    {
+                        item1.Enable = false;
+                        item1.Checked = true;
+                    }
+
+                    commits.Add(item1);
+                }
 
 
             });
@@ -255,6 +265,7 @@ namespace Awake.Views.Pages
             process1.StartInfo = startInfo1;
 
             int idx1 = 0;
+            int number_show1 = 0;
             commits2 = new List<CommitItem>();
             process1.ErrorDataReceived += new DataReceivedEventHandler(delegate (object sender, DataReceivedEventArgs e)
             {
@@ -270,20 +281,25 @@ namespace Awake.Views.Pages
                     return;
                 }
 
-                item2.Hash = itemarr[0];
-                item2.Message = itemarr[1];
-                item2.Date = itemarr[2];
-                item2.Id = idx++;
-                item2.Enable = true;
-                item2.Checked = false;
-
-                if (currHash == item2.Hash)
+                if (number_show1 != setting_show) 
                 {
-                    item2.Enable = false;
-                    item2.Checked = true;
-                }
+                    
+                    number_show1 += 1;
+                    item2.Hash = itemarr[0];
+                    item2.Message = itemarr[1];
+                    item2.Date = itemarr[2];
+                    item2.Id = idx1++;
+                    item2.Enable = true;
+                    item2.Checked = false;
 
-                commits2.Add(item2);
+                    if (currHash == item2.Hash)
+                    {
+                        item2.Enable = false;
+                        item2.Checked = true;
+                    }
+
+                    commits2.Add(item2);
+                }
 
 
             });
@@ -373,7 +389,9 @@ namespace Awake.Views.Pages
 
             string msg2 = process.StandardOutput.ReadToEnd();
 
-            InitializeData();
+            CommiteCollection.Clear();
+            CommiteCollection2.Clear();
+            InitializeData(30);
 
             lblCurrHash.Content = currHash;
             lblCurrDate.Content = msg.Split("^^")[2];
@@ -423,7 +441,10 @@ namespace Awake.Views.Pages
 
             string msg2 = process.StandardOutput.ReadToEnd();
 
-            InitializeData();
+
+            CommiteCollection.Clear();
+            CommiteCollection2.Clear();
+            InitializeData(30);
             InitializeComponent();
 
             lblCurrHash.Content = currHash;
@@ -468,10 +489,23 @@ namespace Awake.Views.Pages
             btnUpdateCode.IsEnabled = false;
 
             CommiteCollection.Clear();
+            CommiteCollection2.Clear();
 
-            InitializeData();
+            InitializeData(30);
 
             commit.ItemsSource = CommiteCollection;
+        }
+
+        private void DataGrid_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            var scrollViewer = e.OriginalSource as ScrollViewer;
+            if (e.VerticalOffset != 0 && e.VerticalOffset == scrollViewer.ScrollableHeight)
+            {
+                CommiteCollection.Clear();
+                CommiteCollection2.Clear();
+                InitializeData(80);
+                
+            }
         }
 
     }

@@ -59,11 +59,11 @@
                         <TextBlock Text="稳定版(main) " FontSize="16"/>
                     </StackPanel>
                 </TabItem.Header>
-                <ui:DataGrid x:Name="commit" ScrollViewer.VerticalScrollBarVisibility="Visible"  MaxHeight="700"
+                <ui:DataGrid x:Name="commit" ScrollViewer.VerticalScrollBarVisibility="Visible"  MaxHeight="410"
                     AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="短hash" Binding="{Binding Hash}" CanUserResize="False" IsReadOnly="True" Width="80" />
-                        <DataGridTextColumn Header="提交信息" Binding="{Binding Message}" CanUserResize="False" IsReadOnly="True" Width="625" />
+                        <DataGridTextColumn Header="提交信息" Binding="{Binding Message}" CanUserResize="False" IsReadOnly="True" Width="*" />
                         <DataGridTextColumn Header="提交日期" Binding="{Binding Date}" CanUserResize="False" IsReadOnly="True" Width="140" />
                         <DataGridCheckBoxColumn Header="当前" Binding="{Binding Checked}"  CanUserResize="False" IsReadOnly="True" Width="35"/>
                         <DataGridTemplateColumn Header="版本操作" Width="100">
@@ -85,11 +85,11 @@
                         <TextBlock Text="开发版(dev)" FontSize="16"/>
                     </StackPanel>
                 </TabItem.Header>
-                <ui:DataGrid x:Name="commit2" ScrollViewer.VerticalScrollBarVisibility="Visible"  MaxHeight="700"
+                <ui:DataGrid x:Name="commit2" ScrollViewer.ScrollChanged="DataGrid_ScrollChanged" MaxHeight="410"
                         AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="短hash" Binding="{Binding Hash}" CanUserResize="False" IsReadOnly="True" Width="80"/>
-                        <DataGridTextColumn Header="提交信息" Binding="{Binding Message}" CanUserResize="False" IsReadOnly="True" Width="625"/>
+                        <DataGridTextColumn Header="提交信息" Binding="{Binding Message}" CanUserResize="False" IsReadOnly="True" Width="*"/>
                         <DataGridTextColumn Header="提交日期" Binding="{Binding Date}" CanUserResize="False" IsReadOnly="True"  Width="140"/>
                         <DataGridCheckBoxColumn Header="当前" Binding="{Binding Checked}"  CanUserResize="False" IsReadOnly="True"  Width="35" />
                         <DataGridTemplateColumn Header="版本操作" Width="100">
