@@ -47,22 +47,8 @@ namespace Awake.Views.Pages
             {
                 ViewModel = viewModel;
                 InitializeComponent();
-                _imagePaths = new List<string> { "pack://application:,,,/img/001.png",
-                "pack://application:,,,/img/002.png",
-                "pack://application:,,,/img/003.png",
-                "pack://application:,,,/img/004.png",
-                "pack://application:,,,/img/005.png",
-                "pack://application:,,,/img/006.png",
-                "pack://application:,,,/img/007.png",
-                "pack://application:,,,/img/008.png",
-                "pack://application:,,,/img/009.png",
-                "pack://application:,,,/img/010.png",
-                "pack://application:,,,/img/011.png",
-                "pack://application:,,,/img/012.png"
-            };
-                _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(5) };
-                _timer.Tick += TimerTick;
-                _timer.Start();
+                _imagePaths = new List<string> {"/img/001.png"};
+
                 loatmodel(0, "", "[]", 1);
             }
             catch (Exception error)

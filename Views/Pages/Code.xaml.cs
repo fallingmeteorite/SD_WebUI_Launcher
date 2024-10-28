@@ -104,7 +104,7 @@ namespace Awake.Views.Pages
             process1 = new Process();
             startInfo1 = new ProcessStartInfo();
             startInfo1.FileName = initialize.gitPath_use;
-            startInfo1.Arguments = " log --oneline origin master --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
+            startInfo1.Arguments = " log --oneline origin/master --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
             startInfo1.UseShellExecute = false;
             startInfo1.RedirectStandardOutput = true;
             startInfo1.RedirectStandardError = false;
@@ -118,7 +118,7 @@ namespace Awake.Views.Pages
             msg1 = process1.StandardOutput.ReadToEnd();
             currHash = msg1.Split("^^")[0];
 
-            commit2.ItemsSource = CommiteCollection;
+            commit.ItemsSource = CommiteCollection;
 
 
             Process process = new Process();
@@ -166,7 +166,7 @@ namespace Awake.Views.Pages
             process = new Process();
             startInfo = new ProcessStartInfo();
             startInfo.FileName = initialize.gitPath_use;
-            startInfo.Arguments = " log --oneline origin dev --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
+            startInfo.Arguments = " log --oneline origin/main --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
             startInfo.RedirectStandardError = false;
@@ -180,7 +180,7 @@ namespace Awake.Views.Pages
             msg = process.StandardOutput.ReadToEnd();
             currHash = msg.Split("^^")[0];
 
-            commit.ItemsSource = CommiteCollection;
+            commit2.ItemsSource = CommiteCollection2;
         }
         private void InitializeData()
         {
@@ -211,6 +211,7 @@ namespace Awake.Views.Pages
                 {
                     return;
                 }
+
                 item1.Hash = itemarr[0];
                 item1.Message = itemarr[1];
                 item1.Date = itemarr[2];
@@ -225,6 +226,8 @@ namespace Awake.Views.Pages
                 }
 
                 commits.Add(item1);
+
+
             });
 
             process.Start();
@@ -236,7 +239,70 @@ namespace Awake.Views.Pages
             {
                 CommiteCollection.Add(commits[i]);
             }
+
+
+
+            Process process1 = new Process();
+            ProcessStartInfo startInfo1 = new ProcessStartInfo();
+            startInfo1.FileName = initialize.gitPath_use;
+            startInfo1.Arguments = " --no-pager log origin/main --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1000";
+            startInfo1.UseShellExecute = false;
+            startInfo1.RedirectStandardOutput = true;
+            startInfo1.RedirectStandardError = true;
+            startInfo1.CreateNoWindow = true;
+            startInfo1.WorkingDirectory = initialize.加载路径;
+
+            process1.StartInfo = startInfo1;
+
+            int idx1 = 0;
+            commits2 = new List<CommitItem>();
+            process1.ErrorDataReceived += new DataReceivedEventHandler(delegate (object sender, DataReceivedEventArgs e)
+            {
+
+            });
+            process1.OutputDataReceived += new DataReceivedEventHandler(delegate (object sender, DataReceivedEventArgs e)
+            {
+                if (e.Data == null) return;
+                CommitItem item2 = new CommitItem();
+                string[] itemarr = e.Data.Split("^^");
+                if (itemarr.Length < 3)
+                {
+                    return;
+                }
+
+                item2.Hash = itemarr[0];
+                item2.Message = itemarr[1];
+                item2.Date = itemarr[2];
+                item2.Id = idx++;
+                item2.Enable = true;
+                item2.Checked = false;
+
+                if (currHash == item2.Hash)
+                {
+                    item2.Enable = false;
+                    item2.Checked = true;
+                }
+
+                commits2.Add(item2);
+
+
+            });
+
+            process1.Start();
+            process1.BeginErrorReadLine();
+            process1.BeginOutputReadLine();
+            process1.WaitForExit();
+
+            for (int i = 0; i < commits2.Count(); i++)
+            {
+                CommiteCollection2.Add(commits2[i]);
+            }
+
         }
+
+
+
+
         private void setup_Click(object sender, RoutedEventArgs e)
         {
 
