@@ -235,115 +235,154 @@ namespace Awake.Views.Pages
         }
         private void 运行路径选择_Click(object sender, RoutedEventArgs e)
         {
-            initialize.选择工作路径();
-            //检查WebUI安装状态
-            initialize.已下载WebUI = initialize.CheckWebUIdownloaded();
-            initialize.已安装WebUI = initialize.CheckWebUIinstelled();
-            initialize.已解压WebUI = initialize.CheckWebUIunzip();
-            if (initialize.已下载WebUI == true)
+            try
             {
-                if (initialize.已解压WebUI == false)//未解压：解压安装组控件
+                initialize.选择工作路径();
+                //检查WebUI安装状态
+                initialize.已下载WebUI = initialize.CheckWebUIdownloaded();
+                initialize.已安装WebUI = initialize.CheckWebUIinstelled();
+                initialize.已解压WebUI = initialize.CheckWebUIunzip();
+                if (initialize.已下载WebUI == true)
                 {
-                    if (initialize.已安装WebUI == false)
+                    if (initialize.已解压WebUI == false)//未解压：解压安装组控件
                     {
-                        下载组.Visibility = Visibility.Collapsed;//隐藏下载组控件
-                        解压组.Visibility = Visibility.Visible;//显示解压组控件
+                        if (initialize.已安装WebUI == false)
+                        {
+                            下载组.Visibility = Visibility.Collapsed;//隐藏下载组控件
+                            解压组.Visibility = Visibility.Visible;//显示解压组控件
+                        }
+                        if (initialize.已安装WebUI == true)
+                        {
+                            WebUI下载按钮.Content = "一键启动";
+                        }
                     }
-                    if (initialize.已安装WebUI == true)
+                    if (initialize.已解压WebUI == true)
                     {
-                        WebUI下载按钮.Content = "一键启动";
+                        if (initialize.已安装WebUI == false)
+                        {
+                            下载组.Visibility = Visibility.Collapsed;//隐藏下载组控件
+                            安装组.Visibility = Visibility.Visible;//显示解压组控件
+                        }
+                        if (initialize.已安装WebUI == true)
+                        {
+                            WebUI下载按钮.Content = "一键启动";
+                        }
                     }
+
                 }
-                if (initialize.已解压WebUI == true)
+                if (initialize.已下载WebUI == false)
                 {
-                    if (initialize.已安装WebUI == false)
+
+                    if (initialize.已解压WebUI == false)//未解压：解压安装组控件
                     {
-                        下载组.Visibility = Visibility.Collapsed;//隐藏下载组控件
-                        安装组.Visibility = Visibility.Visible;//显示解压组控件
+
+                        if (initialize.已安装WebUI == false)
+                        {
+                            WebUI下载按钮.Content = "一键下载";
+
+                        }
+                        if (initialize.已安装WebUI == true)
+                        {
+                            WebUI下载按钮.Content = "一键启动";
+                        }
                     }
-                    if (initialize.已安装WebUI == true)
+                    if (initialize.已解压WebUI == true)
                     {
-                        WebUI下载按钮.Content = "一键启动";
+
+                        if (initialize.已安装WebUI == false)
+                        {
+                            磁盘剩余显示.Text += "未安装WebUI ";
+
+                            下载组.Visibility = Visibility.Collapsed;//隐藏下载组控件
+                            安装组.Visibility = Visibility.Visible;//显示解压组控件
+                        }
+                        if (initialize.已安装WebUI == true)
+                        {
+                            WebUI下载按钮.Content = "一键启动";
+                        }
                     }
+
+                }
+
+                工作路径展示.Text = initialize.工作路径;
+                double freeSpaceGB = GetFreeSpaceGB(initialize.工作路径);
+                磁盘剩余显示.Text = $"磁盘剩余空间：{freeSpaceGB:0.00} GB";
+                if (freeSpaceGB < 5)
+                {
+                    磁盘剩余显示.Text += "磁盘空间不足";
+                    return;
                 }
 
             }
-            if (initialize.已下载WebUI == false)
+            catch
             {
 
-                if (initialize.已解压WebUI == false)//未解压：解压安装组控件
-                {
-
-                    if (initialize.已安装WebUI == false)
-                    {
-                        WebUI下载按钮.Content = "一键下载";
-
-                    }
-                    if (initialize.已安装WebUI == true)
-                    {
-                        WebUI下载按钮.Content = "一键启动";
-                    }
-                }
-                if (initialize.已解压WebUI == true)
-                {
-
-                    if (initialize.已安装WebUI == false)
-                    {
-                        磁盘剩余显示.Text += "未安装WebUI ";
-
-                        下载组.Visibility = Visibility.Collapsed;//隐藏下载组控件
-                        安装组.Visibility = Visibility.Visible;//显示解压组控件
-                    }
-                    if (initialize.已安装WebUI == true)
-                    {
-                        WebUI下载按钮.Content = "一键启动";
-                    }
-                }
-
             }
-
-            工作路径展示.Text = initialize.工作路径;
-            double freeSpaceGB = GetFreeSpaceGB(initialize.工作路径);
-            磁盘剩余显示.Text = $"磁盘剩余空间：{freeSpaceGB:0.00} GB";
-            if (freeSpaceGB < 5)
-            {
-                磁盘剩余显示.Text += "磁盘空间不足";
-                return;
-            }
-
 
         }
 
         private void 启用自定义路径_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-
-            if (启用自定义路径.IsChecked == true)
+            try
             {
-                initialize.启用自定义路径 = true;
+                if (启用自定义路径.IsChecked == true)
+                {
+                    initialize.启用自定义路径 = true;
+                }
+                else
+                {
+                    initialize.启用自定义路径 = false;
+
+                }
             }
-            else
+            catch
             {
-                initialize.启用自定义路径 = false;
 
             }
+
+
         }
 
         private void Git路径选择_Click(object sender, RoutedEventArgs e)
         {
-            initialize.选择Git路径();
-            Git路径展示.Text = gitPath;
+            try
+            {
+                initialize.选择Git路径();
+                Git路径展示.Text = gitPath;
+            }
+            catch
+            {
+
+            }
+
         }
 
         private void VENV路径选择_Click(object sender, RoutedEventArgs e)
         {
-            initialize.选择VENV路径();
-            VENV路径展示.Text = venvPath;
+            try
+            {
+                initialize.选择VENV路径();
+                VENV路径展示.Text = venvPath;
+            }
+
+            catch
+            {
+
+            }
         }
 
         private void 本地运行路径_Click(object sender, RoutedEventArgs e)
         {
-            initialize.本地运行路径();
-            本地工作路径展示.Text = 本地路径;
+            try
+            {
+                initialize.本地运行路径();
+                本地工作路径展示.Text = 本地路径;
+            }
+            catch
+            {
+
+            }
+
         }
 
 
@@ -574,29 +613,29 @@ namespace Awake.Views.Pages
 
             //获得源文件下所有文件
             List<string> files = new List<string>(Directory.GetFiles(sourcePath));
-                files.ForEach(c =>
+            files.ForEach(c =>
+            {
+                string destFile = Path.Combine(new string[] { destPath, Path.GetFileName(c) });
+                //覆盖模式
+                if (File.Exists(destFile))
                 {
-                    string destFile = Path.Combine(new string[] { destPath, Path.GetFileName(c) });
-                    //覆盖模式
-                    if (File.Exists(destFile))
-                    {
-                        File.Delete(destFile);
-                    }
-                    File.Move(c, destFile);
-                });
-                //获得源文件下所有目录文件
-                List<string> folders = new List<string>(Directory.GetDirectories(sourcePath));
+                    File.Delete(destFile);
+                }
+                File.Move(c, destFile);
+            });
+            //获得源文件下所有目录文件
+            List<string> folders = new List<string>(Directory.GetDirectories(sourcePath));
 
-                folders.ForEach(c =>
-                {
-                    string destDir = Path.Combine(new string[] { destPath, Path.GetFileName(c) });
-                    //Directory.Move必须要在同一个根目录下移动才有效，不能在不同卷中移动。
-                    //Directory.Move(c, destDir);
+            folders.ForEach(c =>
+            {
+                string destDir = Path.Combine(new string[] { destPath, Path.GetFileName(c) });
+                //Directory.Move必须要在同一个根目录下移动才有效，不能在不同卷中移动。
+                //Directory.Move(c, destDir);
 
-                    //采用递归的方法实现
-                    MoveFolder(c, destDir);
-                });
-             
+                //采用递归的方法实现
+                MoveFolder(c, destDir);
+            });
+
         }
 
         private async void WebUI复制按钮_Click(object sender, RoutedEventArgs e)
@@ -645,7 +684,7 @@ namespace Awake.Views.Pages
             }
         }
 
-            private double GetFreeSpaceGB(string path)
+        private double GetFreeSpaceGB(string path)
         {
             if (string.IsNullOrEmpty(path))
             {

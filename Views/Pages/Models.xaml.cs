@@ -81,27 +81,8 @@ namespace Awake.Views.Pages
             Process.Start("Explorer.exe",
                initialize.加载路径 + "\\models\\lora");
         }
-        public static String ComputeMD5(String fileName)
-        {
-            String hashMD5 = String.Empty;
-            //检查文件是否存在
-            using (System.IO.FileStream fs = new System.IO.FileStream(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read))
-            {
-                //计算文件的MD5值
-                System.Security.Cryptography.MD5 calculator = System.Security.Cryptography.MD5.Create();
-                Byte[] buffer = calculator.ComputeHash(fs);
-                calculator.Clear();
-                //将字节数组转换成十六进制的字符串形式
-                StringBuilder stringBuilder = new StringBuilder();
-                for (int i = 0; i < buffer.Length; i++)
-                {
-                    stringBuilder.Append(buffer[i].ToString("x2"));
-                }
-                hashMD5 = stringBuilder.ToString();
-            }//关闭文件流
-            return hashMD5;
-        }
 
+        
         private void Delete_SD_Click(object sender, RoutedEventArgs e)
         {
 
@@ -120,7 +101,7 @@ namespace Awake.Views.Pages
                     {
                         if (fInfo.Extension != ".ckpt" && fInfo.Extension != ".safetensors") continue;
 
-                        string hash_show = ComputeMD5(fInfo.FullName);
+                        string hash_show = "None";
                         DateTime date = fInfo.CreationTime;
                         FileStream fileStream = fInfo.Open(FileMode.Open, FileAccess.Read);
                         fileStream.Position = 0;
@@ -140,9 +121,9 @@ namespace Awake.Views.Pages
                 System.Windows.MessageBox.Show(model_name + "文件已删除");
             }
 
-            catch (Exception ex)
+            catch 
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                
             }
 
         }
@@ -164,7 +145,7 @@ namespace Awake.Views.Pages
                 {
                     if (fInfo.Extension != ".ckpt" && fInfo.Extension != ".safetensors") continue;
 
-                    string hash_show = ComputeMD5(fInfo.FullName);
+                    string hash_show = "None";
                     DateTime date = fInfo.CreationTime;
                     FileStream fileStream = fInfo.Open(FileMode.Open, FileAccess.Read);
                     fileStream.Position = 0;
@@ -182,9 +163,9 @@ namespace Awake.Views.Pages
                 vaes.ItemsSource = VaesCollection;
                 System.Windows.MessageBox.Show(model_name + "文件已删除");
             }
-            catch (Exception ex)
+            catch
             {
-                System.Windows.MessageBox.Show(ex.Message);
+               
             }
 
         }
@@ -205,7 +186,7 @@ namespace Awake.Views.Pages
                 {
                     if (fInfo.Extension != ".ckpt" && fInfo.Extension != ".safetensors") continue;
 
-                    string hash_show = ComputeMD5(fInfo.FullName);
+                    string hash_show = "None";
                     DateTime date = fInfo.CreationTime;
                     FileStream fileStream = fInfo.Open(FileMode.Open, FileAccess.Read);
                     fileStream.Position = 0;
@@ -223,9 +204,9 @@ namespace Awake.Views.Pages
                 loras.ItemsSource = LorasCollection;
                 System.Windows.MessageBox.Show(model_name + "文件已删除");
             }
-            catch (Exception ex)
+            catch
             {
-                System.Windows.MessageBox.Show(ex.Message);
+              
             }
 
         }
@@ -248,7 +229,7 @@ namespace Awake.Views.Pages
                 {
                     if (fInfo.Extension != ".pt" && fInfo.Extension != ".safetensors") continue;
 
-                    string hash_show = ComputeMD5(fInfo.FullName);
+                    string hash_show = "None";
                     DateTime date = fInfo.CreationTime;
                     FileStream fileStream = fInfo.Open(FileMode.Open, FileAccess.Read);
                     fileStream.Position = 0;
@@ -266,9 +247,9 @@ namespace Awake.Views.Pages
                 hys.ItemsSource = HysCollection;
                 System.Windows.MessageBox.Show(model_name + "文件已删除");
             }
-            catch (Exception ex)
+            catch 
             {
-                System.Windows.MessageBox.Show(ex.Message);
+              
             }
         }
 
@@ -290,7 +271,7 @@ namespace Awake.Views.Pages
                 {
                     if (fInfo.Extension != ".pt" && fInfo.Extension != ".safetensors") continue;
 
-                    string hash_show = ComputeMD5(fInfo.FullName);
+                    string hash_show = "None";
                     DateTime date = fInfo.CreationTime;
                     FileStream fileStream = fInfo.Open(FileMode.Open, FileAccess.Read);
                     fileStream.Position = 0;
@@ -308,9 +289,9 @@ namespace Awake.Views.Pages
                 embs.ItemsSource = EmbCollection;
                 System.Windows.MessageBox.Show(model_name + "文件已删除");
             }
-            catch (Exception ex)
+            catch
             {
-                System.Windows.MessageBox.Show(ex.Message);
+        
             }
 
 
@@ -341,7 +322,7 @@ namespace Awake.Views.Pages
                         {
                             if (fInfo.Extension != ".pt" && fInfo.Extension != ".safetensors") continue;
 
-                            string hash_show = ComputeMD5(fInfo.FullName);
+                            string hash_show = "None";
                             DateTime date = fInfo.CreationTime;
                             FileStream fileStream = fInfo.Open(FileMode.Open, FileAccess.Read);
                             fileStream.Position = 0;
@@ -368,7 +349,7 @@ namespace Awake.Views.Pages
                         {
                             if (fInfo.Extension != ".pt" && fInfo.Extension != ".safetensors") continue;
 
-                            string hash_show = ComputeMD5(fInfo.FullName);
+                            string hash_show = "None";
                             DateTime date = fInfo.CreationTime;
                             FileStream fileStream = fInfo.Open(FileMode.Open, FileAccess.Read);
                             fileStream.Position = 0;
@@ -395,7 +376,7 @@ namespace Awake.Views.Pages
                         {
                             if (fInfo.Extension != ".ckpt" && fInfo.Extension != ".safetensors") continue;
 
-                            string hash_show = ComputeMD5(fInfo.FullName);
+                            string hash_show = "None";
                             DateTime date = fInfo.CreationTime;
                             FileStream fileStream = fInfo.Open(FileMode.Open, FileAccess.Read);
                             fileStream.Position = 0;
@@ -422,7 +403,7 @@ namespace Awake.Views.Pages
                         {
                             if (fInfo.Extension != ".ckpt" && fInfo.Extension != ".safetensors") continue;
 
-                            string hash_show = ComputeMD5(fInfo.FullName);
+                            string hash_show = "None";
                             DateTime date = fInfo.CreationTime;
                             FileStream fileStream = fInfo.Open(FileMode.Open, FileAccess.Read);
                             fileStream.Position = 0;
@@ -459,7 +440,7 @@ namespace Awake.Views.Pages
                         {
                             if (fInfo.Extension != ".ckpt" && fInfo.Extension != ".safetensors") continue;
 
-                            string hash_show = ComputeMD5(fInfo.FullName);
+                            string hash_show = "None";
                             DateTime date = fInfo.CreationTime;
                             FileStream fileStream = fInfo.Open(FileMode.Open, FileAccess.Read);
                             fileStream.Position = 0;
@@ -516,12 +497,20 @@ namespace Awake.Views.Pages
         }
         public static void PrintByteArray(byte[] array)
         {
-            for (int i = 0; i < array.Length; i++)
+            try
             {
-                Debug.Write($"{array[i]:X2}");
-                if ((i % 4) == 3) Debug.Write(" ");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Debug.Write($"{array[i]:X2}");
+                    if ((i % 4) == 3) Debug.Write(" ");
+                }
+                Debug.WriteLine("");
             }
-            Debug.WriteLine("");
+            catch
+            {
+
+            }
+            
         }
 
 
