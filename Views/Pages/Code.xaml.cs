@@ -13,6 +13,7 @@ using Awake.Views.Windows;
 using System.Windows.Controls;
 using Awake.Services;
 using System.Security.Policy;
+using System.Threading;
 
 
 namespace Awake.Views.Pages
@@ -22,6 +23,8 @@ namespace Awake.Views.Pages
         public string currHash;
         public List<CommitItem> commits;
         public List<CommitItem> commits2;
+        public static int number_add = 30;
+        public static int check_add = 0;
         public ObservableCollection<CommitItem> CommiteCollection = new();
         public ObservableCollection<CommitItem> CommiteCollection2 = new();
 
@@ -189,6 +192,7 @@ namespace Awake.Views.Pages
         }
         private void InitializeData(int setting_show)
         {
+
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = initialize.gitPath_use;
@@ -498,14 +502,27 @@ namespace Awake.Views.Pages
 
         private void DataGrid_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            var scrollViewer = e.OriginalSource as ScrollViewer;
-            if (e.VerticalOffset != 0 && e.VerticalOffset == scrollViewer.ScrollableHeight)
+            if (check_add == 0) 
             {
-                CommiteCollection.Clear();
-                CommiteCollection2.Clear();
-                InitializeData(80);
-                
+                check_add += 1;
+                var scrollViewer = e.OriginalSource as ScrollViewer;
+                if (e.VerticalOffset != 0 && e.VerticalOffset == scrollViewer.ScrollableHeight)
+                {
+                    number_add += 10;
+                    CommiteCollection.Clear();
+                    CommiteCollection2.Clear();
+                    InitializeData(number_add);
+
+                }
             }
+
+            var scrollViewer1 = e.OriginalSource as ScrollViewer;
+            if (e.VerticalOffset != 0 && e.VerticalOffset != scrollViewer1.ScrollableHeight)
+            {
+                check_add = 0;
+
+            }
+
         }
 
     }
