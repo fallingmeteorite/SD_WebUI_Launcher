@@ -171,7 +171,7 @@
                                                 </StackPanel>
                                             </StackPanel>
                                         </StackPanel>
-                                        
+
                                     </ui:Card>
                                     <TextBlock Text="N卡优化方案" Margin="0,5,0,2" Visibility="Visible"/>
                                     <ui:Card Visibility="Visible">
@@ -299,16 +299,8 @@
 
                     </StackPanel>
                     <StackPanel Width="910" Margin="0,50,0,50">
-                        <StackPanel Orientation="Horizontal" Width="910">
-                            <ui:SymbolIcon Symbol="TagQuestionMark32" Width="20" Height="20" FontSize="20"/>
-                            <ui:Hyperlink FontSize="14" HorizontalAlignment="Center" NavigateUri="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki">获取帮助</ui:Hyperlink>
-
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Width="910">
-                            <ui:SymbolIcon Symbol="CommentCheckmark24" Width="20" Height="20" FontSize="20"/>
-                            <ui:Hyperlink FontSize="14" HorizontalAlignment="Center" NavigateUri="https://github.com/AUTOMATIC1111/stable-diffusion-webui/issues">提供反馈</ui:Hyperlink>
-
-                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Width="910"/>
+                        <StackPanel Orientation="Horizontal" Width="910"/>
                     </StackPanel>
 
                 </StackPanel>

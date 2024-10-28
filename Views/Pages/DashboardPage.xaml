@@ -274,14 +274,8 @@
                                 <Button x:Name="加载更多" Content="刷新更多"  Click="加载更多_Click" FontSize="18" HorizontalAlignment="Stretch" Height="35" Width="427"/>
                             </StackPanel>
                             <StackPanel Margin="0,150,0,0">
-                                <StackPanel Orientation="Horizontal">
-                                    <ui:SymbolIcon Symbol="TagQuestionMark32" Width="20" Height="20" FontSize="20"/>
-                                    <ui:Hyperlink NavigateUri="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki" FontSize="14" HorizontalAlignment="Center" Content="获取帮助"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <ui:SymbolIcon Symbol="CommentCheckmark24" Width="20" Height="20" FontSize="20"/>
-                                    <ui:Hyperlink FontSize="14" NavigateUri="https://github.com/AUTOMATIC1111/stable-diffusion-webui/issues" Content="提供反馈"/>
-                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"/>
+                                <StackPanel Orientation="Horizontal"/>
                             </StackPanel>
 
 
