@@ -69,17 +69,6 @@
     <None Remove="Assets\python_logo.png" />
     <None Remove="img\.net.png" />
     <None Remove="img\001.png" />
-    <None Remove="img\002.png" />
-    <None Remove="img\003.png" />
-    <None Remove="img\004.png" />
-    <None Remove="img\005.png" />
-    <None Remove="img\006.png" />
-    <None Remove="img\007.png" />
-    <None Remove="img\008.png" />
-    <None Remove="img\009.png" />
-    <None Remove="img\010.png" />
-    <None Remove="img\011.png" />
-    <None Remove="img\012.png" />
     <None Remove="img\backui.png" />
     <None Remove="img\github.png" />
     <None Remove="img\mainlogo.png" />
@@ -89,27 +78,6 @@
     <None Remove="img\SD启动.png" />
     <None Remove="img\toolkit.png" />
     <None Remove="Ray_Source.png" />
-    <None Remove="Views\Pages\.net.png" />
-    <None Remove="Views\Pages\001.png" />
-    <None Remove="Views\Pages\002.png" />
-    <None Remove="Views\Pages\003.png" />
-    <None Remove="Views\Pages\004.png" />
-    <None Remove="Views\Pages\005.png" />
-    <None Remove="Views\Pages\006.png" />
-    <None Remove="Views\Pages\007.png" />
-    <None Remove="Views\Pages\008.png" />
-    <None Remove="Views\Pages\009.png" />
-    <None Remove="Views\Pages\010.png" />
-    <None Remove="Views\Pages\011.png" />
-    <None Remove="Views\Pages\012.png" />
-    <None Remove="Views\Pages\github.png" />
-    <None Remove="Views\Pages\mainlogo.png" />
-    <None Remove="Views\Pages\Newtonsoft.png" />
-    <None Remove="Views\Pages\python_logo.jpg" />
-    <None Remove="Views\Pages\Ray_Source.png" />
-    <None Remove="Views\Pages\toolkit.png" />
-    <None Remove="Views\Windows\backui.png" />
-    <None Remove="Views\Windows\SD启动.png" />
   </ItemGroup>
 
   <ItemGroup>

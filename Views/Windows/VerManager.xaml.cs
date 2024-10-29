@@ -150,12 +150,12 @@ namespace Awake.Views.Windows
                 item1.Message = itemarr[1];
                 item1.Date = itemarr[2];
                 item1.Id = idx++;
-                item1.Enable = true;
+                item1.Use_start = true;
                 item1.Checked = false;
 
                 if (currHash == item1.Hash)
                 {
-                    item1.Enable = false;
+                    item1.Use_start = false;
                     item1.Checked = true;
                 }
 
@@ -203,7 +203,7 @@ namespace Awake.Views.Windows
                     item1.Message = itemarr[1];
                     item1.Date = itemarr[2];
                     item1.Id = idx++;
-                    item1.Enable = true;
+                    item1.Use_start = true;
                     item1.Checked = false;
 
                     for (int j = 0; j < tags.Count(); j++)
@@ -217,7 +217,7 @@ namespace Awake.Views.Windows
 
                     if (currHash == item1.Hash)
                     {
-                        item1.Enable = false;
+                        item1.Use_start = false;
                         item1.Checked = true;
                     }
 

@@ -28,7 +28,7 @@ namespace Awake.Views.Pages
 
         private void Read_setting_01()
         {
-            string filePath = @".AI_launther_log\setting.txt"; // 文本文件路径
+            string filePath = @".SD_Webui_Launcher_log\setting.txt"; // 文本文件路径
 
             try
             {
@@ -76,9 +76,9 @@ namespace Awake.Views.Pages
             InitializeComponent();
             GetSystemInfo();
 
-            if (File.Exists(@".AI_launther_log\startpath.txt") == false)
+            if (File.Exists(@".SD_Webui_Launcher_log\startpath.txt") == false)
             {
-                File.WriteAllText(@".AI_launther_log\startpath.txt", "暂未设置部署路径");
+                File.WriteAllText(@".SD_Webui_Launcher_log\startpath.txt", "暂未设置部署路径");
                 磁盘剩余显示.Text = "磁盘剩余空间：未知";
 
                 工作路径展示.Text = "暂未设置部署路径";
@@ -527,7 +527,7 @@ namespace Awake.Views.Pages
         {
 
             // 设置7zip.exe的路径，确保路径是正确的  
-            string SevenZipPath = @".AI_launther_log\7z.exe";
+            string SevenZipPath = @".SD_Webui_Launcher_log\7z.exe";
             标准输出流.Text = "";
             // 创建一个新的进程  
             Process 解压魔法 = new Process();

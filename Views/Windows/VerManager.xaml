@@ -67,7 +67,7 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <ui:SymbolIcon Margin="0,0,6,0" Symbol="DeveloperBoardLightning20" />
-                        <TextBlock Text="开发版(dev)" FontSize="16"/>
+                        <TextBlock Text="稳定版(master)" FontSize="16"/>
                     </StackPanel>
                 </TabItem.Header>
                 <ui:DataGrid x:Name="commit" ScrollViewer.VerticalScrollBarVisibility="Visible"  MaxHeight="650"

@@ -19,7 +19,7 @@ namespace Awake.Views.Pages
 
         private void Read_setting_01()
         {
-            string filePath = @".AI_launther_log\setting.txt"; // 文本文件路径
+            string filePath = @".SD_Webui_Launcher_log\setting.txt"; // 文本文件路径
 
             try
             {
@@ -186,10 +186,10 @@ namespace Awake.Views.Pages
             float memorysize = await Task.Run(() => hardinfo.GetPhysicalMemory());
             int memorynum = await Task.Run(() => hardinfo.MemoryNumberCount());
             string gpuname = await Task.Run(() => hardinfo.GPUName());
-            计算机CPU信息.Text = "CPU信息：" + cpuname;
-            计算机名称类型.Text = "系统名称：" + Machinename + "   系统类型：" + systemType;
-            计算机内存信息.Text = "内存信息：" + memorynum + " 插槽" + "  共计" + memorysize + " GB";
-            计算机显卡信息.Text = "显卡信息：" + gpuname;
+            计算机CPU信息.Text = "CPU：" + cpuname;
+            计算机名称类型.Text = "系统：" + Machinename + "   系统类型：" + systemType;
+            计算机内存信息.Text = "内存：" + memorynum + " 插槽" + "  共计" + memorysize + " GB";
+            计算机显卡信息.Text = "显卡：" + gpuname;
         }
 
         //这里是一些开关的控制器组件

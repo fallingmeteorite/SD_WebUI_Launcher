@@ -58,30 +58,6 @@ namespace Awake.Views.Pages
 
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            // 随机选择一张图片作为初始的背景  
-            SetRandomImage();
-        }
-
-        private void TimerTick(object sender, EventArgs e)
-        {
-            // 每10秒更换一次背景图片  
-            SetRandomImage();
-        }
-
-        private void SetRandomImage()
-        {
-            if (_imagePaths.Any())
-            {
-                var randomImageIndex = _random.Next(_imagePaths.Count);
-                var randomImagePath = _imagePaths[randomImageIndex];
-                背景图.ImageSource = new BitmapImage(new Uri(randomImagePath));
-            }
-        }
-
-
-
         //异步方法避免阻塞UI线程
         async Task loatmodel(int _modelClass, string _searchName, string _modelType, int _modelPage)
         {

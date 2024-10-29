@@ -12,13 +12,13 @@ namespace Awake
         public static bool CheckDirectory()//首先查找启动器所在目录是否有工作目录，在启动器所在目录创建工作目录
         {
 
-            if (Directory.Exists(@".AI_launther_log"))
+            if (Directory.Exists(@".SD_Webui_Launcher_log"))
             {
                 return true;
             }
             else
             {
-                Directory.CreateDirectory(@".AI_launther_log");
+                Directory.CreateDirectory(@".SD_Webui_Launcher_log");
                 return false;
             }
 
@@ -85,7 +85,7 @@ namespace Awake
         public static void Read_setting()
         {
 
-            string filePath = @".AI_launther_log\setting.txt"; // 文本文件路径
+            string filePath = @".SD_Webui_Launcher_log\setting.txt"; // 文本文件路径
 
             try
             {
@@ -204,7 +204,7 @@ namespace Awake
                 {
                     initialize.工作路径 = initialize.工作路径.Substring(0, initialize.工作路径.Length - 1);
                 }
-                File.WriteAllText(@".AI_launther_log\startpath.txt", initialize.工作路径);
+                File.WriteAllText(@".SD_Webui_Launcher_log\startpath.txt", initialize.工作路径);
             }
         }
         public static void 选择Git路径()
@@ -214,7 +214,7 @@ namespace Awake
             if (folder.ShowDialog() == DialogResult.OK)
             {
                 initialize.gitPath = folder.SelectedPath;
-                File.WriteAllText(@".AI_launther_log\gitpath.txt", initialize.gitPath);
+                File.WriteAllText(@".SD_Webui_Launcher_log\gitpath.txt", initialize.gitPath);
 
             }
         }
@@ -225,7 +225,7 @@ namespace Awake
             if (folder.ShowDialog() == DialogResult.OK)
             {
                 initialize.venvPath = folder.SelectedPath;
-                File.WriteAllText(@".AI_launther_log\venvpath.txt", initialize.venvPath);
+                File.WriteAllText(@".SD_Webui_Launcher_log\venvpath.txt", initialize.venvPath);
 
             }
         }
@@ -241,7 +241,7 @@ namespace Awake
                 {
                     initialize.本地路径 = initialize.本地路径.Substring(0, initialize.本地路径.Length - 1);
                 }
-                File.WriteAllText(@".AI_launther_log\startpath_local.txt", initialize.本地路径);
+                File.WriteAllText(@".SD_Webui_Launcher_log\startpath_local.txt", initialize.本地路径);
 
             }
         }
@@ -299,20 +299,20 @@ namespace Awake
         }
         public static void CheckCommandline()//这里在初始化后从log里读取保存的args
         {
-            if (File.Exists(@".AI_launther_log\argspath.txt"))
+            if (File.Exists(@".SD_Webui_Launcher_log\argspath.txt"))
             {
                 // 如果文件存在，读取其中的内容到startpath全局变量中
-                initialize.命令列表 = File.ReadAllText(@".AI_launther_log\argspath.txt");
+                initialize.命令列表 = File.ReadAllText(@".SD_Webui_Launcher_log\argspath.txt");
 
             }
 
         }
         public static void CheckStartPathFile()//这里在初始化后从log里读取工作路径
         {
-            if (File.Exists(@".AI_launther_log\startpath.txt"))
+            if (File.Exists(@".SD_Webui_Launcher_log\startpath.txt"))
             {
                 // 如果文件存在，读取其中的内容到startpath全局变量中
-                initialize.工作路径 = File.ReadAllText(@".AI_launther_log\startpath.txt");
+                initialize.工作路径 = File.ReadAllText(@".SD_Webui_Launcher_log\startpath.txt");
 
                 if (initialize.工作路径.Length == 3)
                 {
@@ -324,15 +324,15 @@ namespace Awake
         }
         public static void CheckgitPathFile()//这里在初始化后从log里读取git路径
         {
-            if (File.Exists(@".AI_launther_log\gitpath.txt"))
+            if (File.Exists(@".SD_Webui_Launcher_log\gitpath.txt"))
             {
                 // 如果文件存在，读取其中的内容到gitpath全局变量中
-                initialize.gitPath = File.ReadAllText(@".AI_launther_log\gitpath.txt");
+                initialize.gitPath = File.ReadAllText(@".SD_Webui_Launcher_log\gitpath.txt");
             }
         }
         public static void CheckVENVPathFile()//这里在初始化后从log里读取VENV的路径
         {
-            string filePath = @".AI_launther_log\venvpath.txt";
+            string filePath = @".SD_Webui_Launcher_log\venvpath.txt";
             if (File.Exists(filePath))
             {
                 // 如果文件存在，读取其中的内容到venvpath全局变量中
@@ -341,10 +341,10 @@ namespace Awake
         }
         public static void Checkstartpath_local()//这里在初始化后从log里读取VENV的路径
         {
-            if (File.Exists(@".AI_launther_log\startpath_local.txt"))
+            if (File.Exists(@".SD_Webui_Launcher_log\startpath_local.txt"))
             {
                 // 如果文件存在，读取其中的内容到venvpath全局变量中
-                initialize.本地路径 = File.ReadAllText(@".AI_launther_log\startpath_local.txt");
+                initialize.本地路径 = File.ReadAllText(@".SD_Webui_Launcher_log\startpath_local.txt");
                 if (initialize.本地路径.Length == 3)
                 {
                     initialize.本地路径 = initialize.本地路径.Substring(0, initialize.本地路径.Length - 1);

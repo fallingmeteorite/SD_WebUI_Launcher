@@ -65,7 +65,7 @@ namespace Awake.Views.Windows
                     //计算机内存信息.Text = "内存信息：" + memorynum + " 插槽" + "  共计" + memorysize + " GB";
                     //计算机显卡信息.Text = "显卡信息：" + gpuname;
 
-                    Read_setting();    //读取配置
+                    Read_setting();    //读取本地配置
 
                     // 读取工作路径然后展示
                     initialize.CheckStartPathFile();
@@ -76,10 +76,10 @@ namespace Awake.Views.Windows
                 }
 
 
-                if (File.Exists(@".AI_launther_log\UIpicture.txt"))
+                if (File.Exists(@".SD_Webui_Launcher_log\UIpicture.txt"))
                 {
                     // 如果文件存在，读取其中的内容到UI全局变量中
-                    initialize.背景颜色 = File.ReadAllText(@".AI_launther_log\UI.txt");
+                    initialize.背景颜色 = File.ReadAllText(@".SD_Webui_Launcher_log\UI.txt");
                 }
                 else
                 {
@@ -87,18 +87,18 @@ namespace Awake.Views.Windows
                     basewindow.WindowBackdropType = BackgroundType.None;
                     Theme.Apply(ThemeType.Dark);
                 }
-                if (File.Exists(@".AI_launther_log\UIpicture.txt"))
+                if (File.Exists(@".SD_Webui_Launcher_log\UIpicture.txt"))
                 {
                     // 如果文件存在，读取其中的内容到UI全局变量中
-                    initialize.背景图片 = File.ReadAllText(@".AI_launther_log\UIpicture.txt");
+                    initialize.背景图片 = File.ReadAllText(@".SD_Webui_Launcher_log\UIpicture.txt");
                 }
                 else
                 {
                     initialize.背景图片 = "";
                 }
-                if (File.Exists(@".AI_launther_log\UIalpha.txt"))
+                if (File.Exists(@".SD_Webui_Launcher_log\UIalpha.txt"))
                 {
-                    string alphaStringent = File.ReadAllText(@".AI_launther_log\UIalpha.txt");
+                    string alphaStringent = File.ReadAllText(@".SD_Webui_Launcher_log\UIalpha.txt");
                     initialize.背景亮度 = int.Parse(alphaStringent);
                     initialize.图片亮度 = int.Parse(alphaStringent);
                     图片亮度.Value = int.Parse(alphaStringent);
@@ -113,10 +113,10 @@ namespace Awake.Views.Windows
 
                 if (背景颜色 == "Mica")
                 {
-                    if (File.Exists(@".AI_launther_log\UIalpha.txt"))
+                    if (File.Exists(@".SD_Webui_Launcher_log\UIalpha.txt"))
                     {
                         basewindow.WindowBackdropType = BackgroundType.Mica;
-                        string alphaStringent = File.ReadAllText(@".AI_launther_log\UIalpha.txt");
+                        string alphaStringent = File.ReadAllText(@".SD_Webui_Launcher_log\UIalpha.txt");
                         图片亮度.Value = int.Parse(alphaStringent);
                         主题背景图.Opacity = 图片亮度.Value / 100;
                         Mica.IsChecked = true;
@@ -124,10 +124,10 @@ namespace Awake.Views.Windows
                 }
                 else if (背景颜色 == "Acrylic")
                 {
-                    if (File.Exists(@".AI_launther_log\UIalpha.txt"))
+                    if (File.Exists(@".SD_Webui_Launcher_log\UIalpha.txt"))
                     {
                         basewindow.WindowBackdropType = BackgroundType.Acrylic;
-                        string alphaStringent = File.ReadAllText(@".AI_launther_log\UIalpha.txt");
+                        string alphaStringent = File.ReadAllText(@".SD_Webui_Launcher_log\UIalpha.txt");
                         图片亮度.Value = int.Parse(alphaStringent);
                         主题背景图.Opacity = 图片亮度.Value / 100;
                         Acrylic.IsChecked = true;
@@ -135,10 +135,10 @@ namespace Awake.Views.Windows
                 }
                 else if (背景颜色 == "Tabbed")
                 {
-                    if (File.Exists(@".AI_launther_log\UIalpha.txt"))
+                    if (File.Exists(@".SD_Webui_Launcher_log\UIalpha.txt"))
                     {
                         basewindow.WindowBackdropType = BackgroundType.Tabbed;
-                        string alphaStringent = File.ReadAllText(@".AI_launther_log\UIalpha.txt");
+                        string alphaStringent = File.ReadAllText(@".SD_Webui_Launcher_log\UIalpha.txt");
                         图片亮度.Value = int.Parse(alphaStringent);
                         主题背景图.Opacity = 图片亮度.Value / 100;
                         Tabbed.IsChecked = true;
@@ -146,10 +146,10 @@ namespace Awake.Views.Windows
                 }
                 else if (背景颜色 == "Auto")
                 {
-                    if (File.Exists(@".AI_launther_log\UIalpha.txt"))
+                    if (File.Exists(@".SD_Webui_Launcher_log\UIalpha.txt"))
                     {
                         basewindow.WindowBackdropType = BackgroundType.Auto;
-                        string alphaStringent = File.ReadAllText(@".AI_launther_log\UIalpha.txt");
+                        string alphaStringent = File.ReadAllText(@".SD_Webui_Launcher_log\UIalpha.txt");
                         图片亮度.Value = int.Parse(alphaStringent);
                         主题背景图.Opacity = 图片亮度.Value / 100;
                         Auto.IsChecked = true;
@@ -157,10 +157,10 @@ namespace Awake.Views.Windows
                 }
                 else if (背景颜色 == "None")
                 {
-                    if (File.Exists(@".AI_launther_log\UIalpha.txt"))
+                    if (File.Exists(@".SD_Webui_Launcher_log\UIalpha.txt"))
                     {
                         basewindow.WindowBackdropType = BackgroundType.None;
-                        string alphaStringent = File.ReadAllText(@".AI_launther_log\UIalpha.txt");
+                        string alphaStringent = File.ReadAllText(@".SD_Webui_Launcher_log\UIalpha.txt");
                         图片亮度.Value = int.Parse(alphaStringent);
                         主题背景图.Opacity = 图片亮度.Value / 100;
                         None.IsChecked = true;
@@ -168,11 +168,11 @@ namespace Awake.Views.Windows
                 }
                 else if (背景颜色 == "Picture")
                 {
-                    if (File.Exists(@".AI_launther_log\UIalpha.txt"))
+                    if (File.Exists(@".SD_Webui_Launcher_log\UIalpha.txt"))
                     {
                         basewindow.WindowBackdropType = BackgroundType.None;
                         None.IsChecked = true;
-                        string alphaStringent = File.ReadAllText(@".AI_launther_log\UIalpha.txt");
+                        string alphaStringent = File.ReadAllText(@".SD_Webui_Launcher_log\UIalpha.txt");
                         图片亮度.Value = int.Parse(alphaStringent);
                         主题背景图.Opacity = 图片亮度.Value / 100;
                         string imagepath = initialize.背景图片; // 获取选择的文件路径+文件名  
@@ -268,9 +268,9 @@ namespace Awake.Views.Windows
         {
 
             base.OnClosed(e);
-            File.WriteAllText(@".AI_launther_log\UIalpha.txt", initialize.图片亮度.ToString());
-            File.WriteAllText(@".AI_launther_log\UI.txt", initialize.背景颜色);
-            File.WriteAllText(@".AI_launther_log\UIpicture.txt", initialize.背景图片);
+            File.WriteAllText(@".SD_Webui_Launcher_log\UIalpha.txt", initialize.图片亮度.ToString());
+            File.WriteAllText(@".SD_Webui_Launcher_log\UI.txt", initialize.背景颜色);
+            File.WriteAllText(@".SD_Webui_Launcher_log\UIpicture.txt", initialize.背景图片);
             string 参数设置 = (
                 initialize.浏览器启动 + "\n" +
                 initialize.启动api + "\n" +
@@ -304,7 +304,7 @@ namespace Awake.Views.Windows
                 );
 
 
-            File.WriteAllText(@".AI_launther_log\setting.txt", 参数设置);
+            File.WriteAllText(@".SD_Webui_Launcher_log\setting.txt", 参数设置);
             Application.Current.Shutdown();
         }
 
