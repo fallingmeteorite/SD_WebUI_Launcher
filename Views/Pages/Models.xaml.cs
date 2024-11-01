@@ -474,26 +474,26 @@ namespace Awake.Views.Pages
         public class CheckPoint
         {
             public int Index { get; set; }
-            public string Name { get; set; }
-            public string Desc { get; set; }
+            public string? Name { get; set; }
+            public string? Desc { get; set; }
             public long Size { get; set; }
             public DateTime Date { get; set; }
-            public string ShortHash { get; set; }
+            public string? ShortHash { get; set; }
             public bool isRemote { get; set; }
         }
         public class CheckPointOnline
         {
-            public string Name { get; set; }
-            public string Desc { get; set; }
-            public string Hash { get; set; }
+            public string? Name { get; set; }
+            public string? Desc { get; set; }
+            public string? Hash { get; set; }
         }
         public class Embedding
         {
-            public string Name { get; set; }
-            public string Desc { get; set; }
+            public string? Name { get; set; }
+            public string? Desc { get; set; }
             public long Size { get; set; }
             public DateTime Date { get; set; }
-            public string ShortHash { get; internal set; }
+            public string? ShortHash { get; internal set; }
         }
         public static void PrintByteArray(byte[] array)
         {

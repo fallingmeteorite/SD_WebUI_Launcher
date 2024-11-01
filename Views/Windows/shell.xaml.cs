@@ -21,10 +21,10 @@ namespace Awake.Views.Windows
         float memorysize = 1;
         int memorynum = 1;
         string gpuname = string.Empty;
-        private DispatcherTimer _timer = null;
-        private Process _process = null;
-        private Process 启动魔法 = null;
-        private string 工作路径_start = null;
+        private DispatcherTimer? _timer = null;
+        private Process? _process = null;
+        private Process? 启动魔法 = null;
+        private string? 工作路径_start = null;
 
         public shell()
         {
@@ -169,15 +169,7 @@ namespace Awake.Views.Windows
                 {
 
                     工作路径_start = 本地路径;
-
-                    if (File.Exists(venvPath + @"\python.exe"))
-                    {
-                        startinfo.FileName = (venvPath + @"\python.exe");
-                    }
-                    else
-                    {
-                        startinfo.FileName = (venvPath + @"\Scripts\python.exe");
-                    }
+                    startinfo.FileName = (venvPath);         
 
                     if (显卡类型名 == "NVIDIA")
                     {
@@ -200,7 +192,7 @@ namespace Awake.Views.Windows
 
                     // 设置临时环境变量  
                     startinfo.EnvironmentVariables["TF_CPP_MIN_LOG_LEVEL"] = "3";//屏蔽Tensorflow中的Warning
-                    startinfo.EnvironmentVariables["GIT"] = gitPath + @"\git.exe";//保证WenUI可以使用到git
+                    startinfo.EnvironmentVariables["GIT"] = gitPath;//保证WenUI可以使用到git
                     startinfo.EnvironmentVariables["GIT_PYTHON_REFRESH"] = "quiet";
                     startinfo.EnvironmentVariables["GIT_SSL_NO_VERIFY"] = "true";
                     startinfo.EnvironmentVariables["HF_ENDPOINT"] = "https://hf-mirror.com";

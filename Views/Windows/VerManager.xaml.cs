@@ -49,28 +49,37 @@ namespace Awake.Views.Windows
 
         public VerManager(string giturl, string ext)
         {
+
+            if (initialize.启用自定义路径)
+            {
+                initialize.加载路径 = initialize.本地路径;
+                initialize.gitPath_use = initialize.gitPath;
+                if (!File.Exists(initialize.gitPath_use))
+                {
+                    System.Windows.MessageBox.Show("自定义GIT路径错误或未选择，程序错误即将关闭！");
+                    Process.GetCurrentProcess().Kill();
+                }
+            }
+            else
+            {
+                initialize.加载路径 = initialize.工作路径;
+                initialize.gitPath_use = initialize.工作路径 + @"\GIT\mingw64\bin\git.exe";
+                if (!File.Exists(initialize.gitPath_use))
+                {
+                    System.Windows.MessageBox.Show("工作路径下即整合包未存在GIT，程序错误即将关闭！");
+                    Process.GetCurrentProcess().Kill();
+                }
+
+            }
+
             this.currExt = ext;
             this.giturl = giturl;
 
             InitializeComponent();
 
-            Process process1 = new Process();
-            ProcessStartInfo startInfo1 = new ProcessStartInfo();
-            startInfo1.FileName = initialize.gitPath_use + @"\mingw64\libexec\git-core\git.exe";
-            startInfo1.Arguments = " fetch  --all"; //同步云端更新日志到本地
-            startInfo1.UseShellExecute = false;
-            startInfo1.RedirectStandardOutput = true;
-            startInfo1.RedirectStandardError = false;
-            startInfo1.CreateNoWindow = true;
-            startInfo1.WorkingDirectory = ext;
-
-            process1.StartInfo = startInfo1;
-            process1.Start();
-            process1.WaitForExit();
-
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use + @"\mingw64\libexec\git-core\git.exe";
+            startInfo.FileName = initialize.gitPath_use;
             startInfo.Arguments = " log --oneline --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
@@ -86,7 +95,7 @@ namespace Awake.Views.Windows
 
             process = new Process();
             startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use + @"\mingw64\libexec\git-core\git.exe";
+            startInfo.FileName = initialize.gitPath_use;
             startInfo.Arguments = "  remote -v";
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
@@ -118,7 +127,7 @@ namespace Awake.Views.Windows
             var jsonOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web);
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use + @"\mingw64\libexec\git-core\git.exe";
+            startInfo.FileName = initialize.gitPath_use;
             startInfo.Arguments = "  --no-pager log main --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 150";
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
@@ -171,7 +180,7 @@ namespace Awake.Views.Windows
             {
                 process = new Process();
                 startInfo = new ProcessStartInfo();
-                startInfo.FileName = initialize.gitPath_use + @"\mingw64\libexec\git-core\git.exe";
+                startInfo.FileName = initialize.gitPath_use;
                 startInfo.Arguments = "  --no-pager log master --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 150";
                 startInfo.UseShellExecute = false;
                 startInfo.RedirectStandardOutput = true;
@@ -251,7 +260,7 @@ namespace Awake.Views.Windows
 
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use + @"\mingw64\libexec\git-core\git.exe";
+            startInfo.FileName = initialize.gitPath_use;
             startInfo.Arguments = " checkout " + hash;
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
@@ -267,7 +276,7 @@ namespace Awake.Views.Windows
 
             process = new Process();
             startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use + @"\mingw64\libexec\git-core\git.exe";
+            startInfo.FileName = initialize.gitPath_use;
             startInfo.Arguments = " log --oneline --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
@@ -283,7 +292,7 @@ namespace Awake.Views.Windows
 
             process = new Process();
             startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use + @"\mingw64\libexec\git-core\git.exe";
+            startInfo.FileName = initialize.gitPath_use;
             startInfo.Arguments = " remote -v";
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;

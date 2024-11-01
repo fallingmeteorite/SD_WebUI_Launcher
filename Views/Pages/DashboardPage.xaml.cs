@@ -49,7 +49,7 @@ namespace Awake.Views.Pages
                 InitializeComponent();
                 _imagePaths = new List<string> {"/img/001.png"};
 
-                loatmodel(0, "", "[]", 1);
+                Task task = loatmodel(0, "", "[]", 1);
             }
             catch (Exception error)
             {
@@ -155,7 +155,7 @@ namespace Awake.Views.Pages
             {
                 模型资源列表.Children.Clear();
                 _searchName = 搜索框.Text;
-                loatmodel(模型排列, _searchName, 模型种类, 1);
+                Task task = loatmodel(模型排列, _searchName, 模型种类, 1);
             }
         }
         private void 搜素按钮2_Click(object sender, RoutedEventArgs e)
@@ -164,7 +164,7 @@ namespace Awake.Views.Pages
             {
                 模型资源列表.Children.Clear();
                 _searchName = 搜索框.Text;
-                loatmodel(模型排列, _searchName, 模型种类, 1);
+                Task task = loatmodel(模型排列, _searchName, 模型种类, 1);
             }
         }
 
@@ -173,14 +173,14 @@ namespace Awake.Views.Pages
         {
             模型资源列表.Children.Clear();
             模型排列 = 1;
-            loatmodel(模型排列, _searchName, 模型种类, 1);
+            Task task = loatmodel(模型排列, _searchName, 模型种类, 1);
         }
 
         private void 最热_Click(object sender, RoutedEventArgs e)
         {
             模型资源列表.Children.Clear();
             模型排列 = 2;
-            loatmodel(模型排列, _searchName, 模型种类, 1);
+            Task task = loatmodel(模型排列, _searchName, 模型种类, 1);
         }
 
 
@@ -188,7 +188,7 @@ namespace Awake.Views.Pages
         {
             模型资源列表.Children.Clear();
             模型排列 = 0;
-            loatmodel(模型排列, _searchName, 模型种类, 1);
+            Task task = loatmodel(模型排列, _searchName, 模型种类, 1);
         }
 
 
@@ -199,37 +199,37 @@ namespace Awake.Views.Pages
             {
                 模型资源列表.Children.Clear();
                 模型种类 = "[]";
-                loatmodel(模型排列, _searchName, 模型种类, 1);
+                Task task = loatmodel(模型排列, _searchName, 模型种类, 1);
             }
             if (模型类型选择器.SelectedIndex == 1)
             {
                 模型资源列表.Children.Clear();
                 模型种类 = "[5]";
-                loatmodel(模型排列, _searchName, 模型种类, 1);
+                Task task = loatmodel(模型排列, _searchName, 模型种类, 1);
             }
             if (模型类型选择器.SelectedIndex == 2)
             {
                 模型资源列表.Children.Clear();
                 模型种类 = "[6]";
-                loatmodel(模型排列, _searchName, 模型种类, 1);
+                Task task = loatmodel(模型排列, _searchName, 模型种类, 1);
             }
             if (模型类型选择器.SelectedIndex == 3)
             {
                 模型资源列表.Children.Clear();
                 模型种类 = "[7]";
-                loatmodel(模型排列, "", 模型种类, 1);
+                Task task = loatmodel(模型排列, "", 模型种类, 1);
             }
             if (模型类型选择器.SelectedIndex == 4)
             {
                 模型资源列表.Children.Clear();
                 模型种类 = "[1]";
-                loatmodel(模型排列, _searchName, 模型种类, 1);
+                Task task = loatmodel(模型排列, _searchName, 模型种类, 1);
             }
             if (模型类型选择器.SelectedIndex == 5)
             {
                 模型资源列表.Children.Clear();
                 模型种类 = "[2]";
-                loatmodel(模型排列, _searchName, 模型种类, 1);
+                Task task = loatmodel(模型排列, _searchName, 模型种类, 1);
             }
 
         }

@@ -24,6 +24,29 @@ namespace Awake.Views.Windows
 
         public ExtManager()
         {
+            if (initialize.启用自定义路径)
+            {
+                initialize.加载路径 = initialize.本地路径;
+                initialize.gitPath_use = initialize.gitPath;
+                if (!File.Exists(initialize.gitPath_use))
+                {
+                    System.Windows.MessageBox.Show("自定义GIT路径错误或未选择，程序错误即将关闭！");
+                    Process.GetCurrentProcess().Kill();
+                }
+            }
+            else
+            {
+                initialize.加载路径 = initialize.工作路径;
+                initialize.gitPath_use = initialize.工作路径 + @"\GIT\mingw64\bin\git.exe";
+                if (!File.Exists(initialize.gitPath_use))
+                {
+                    System.Windows.MessageBox.Show("工作路径下即整合包未存在GIT，程序错误即将关闭！");
+                    Process.GetCurrentProcess().Kill();
+                }
+
+            }
+
+
             var httpClient = new HttpClient();
             var jsonOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web);
 
@@ -67,7 +90,7 @@ namespace Awake.Views.Windows
 
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use + @"\mingw64\libexec\git-core\git.exe";
+            startInfo.FileName = initialize.gitPath_use;
             startInfo.Arguments = " clone " + btn.Tag;
             startInfo.UseShellExecute = true;
             startInfo.RedirectStandardOutput = false;
