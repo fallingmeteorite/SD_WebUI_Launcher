@@ -17,9 +17,6 @@ using System.Security.Policy;
 
 namespace Awake.Views.Windows
 {
-    /// <summary>
-    /// ExtManager.xaml 的交互逻辑
-    /// </summary>
     public partial class ExtManager : UiWindow
     {
         ExtObj exts;
@@ -106,24 +103,24 @@ namespace Awake.Views.Windows
 
     public class ExtObj
     {
-        public Extension[] extensions { get; set; }
+        public Extension[]? extensions { get; set; }
     }
 
     public class Extension
     {
-        public string name { get; set; }
-        public string url { get; set; }
-        public string description { get; set; }
-        public string added { get; set; }
+        public string? name { get; set; }
+        public string? url { get; set; }
+        public string? description { get; set; }
+        public string? added { get; set; }
         public bool Setup { get; set; }
     }
 
     public class Extension2
     {
-        public string Name { get; set; }
-        public string URL { get; set; }
-        public string Desc { get; set; }
-        public string Addad { get; set; }
+        public string? Name { get; set; }
+        public string? URL { get; set; }
+        public string? Desc { get; set; }
+        public string? Addad { get; set; }
         public bool Setup { get; set; }
     }
 }

@@ -15,6 +15,7 @@ using Awake.Services;
 using System.Security.Policy;
 using System.Threading;
 using System.Windows.Interop;
+using System.Text.RegularExpressions;
 
 
 namespace Awake.Views.Pages
@@ -23,15 +24,13 @@ namespace Awake.Views.Pages
     {
         public string currHash;
         public List<CommitItem> commits;
-        public List<CommitItem> commits2;
         public static int number_add = 30;
         public static int check_add = 0;
+        public static string branch_name = "";
         public ObservableCollection<CommitItem> CommiteCollection = new();
-        public ObservableCollection<CommitItem> CommiteCollection2 = new();
 
         public Code()
         {
-
             if (initialize.启用自定义路径)
             {
                 initialize.加载路径 = initialize.本地路径;
@@ -54,9 +53,31 @@ namespace Awake.Views.Pages
 
             }
 
-
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = initialize.gitPath_use;
+            startInfo.Arguments = " rev-parse --abbrev-ref HEAD";
+            startInfo.UseShellExecute = false;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardError = false;
+            startInfo.CreateNoWindow = true;
+            startInfo.WorkingDirectory = initialize.加载路径;
+
+            process.StartInfo = startInfo;
+            process.Start();
+            process.WaitForExit();
+
+            branch_name = process.StandardOutput.ReadToEnd();
+            string strRet = "";
+            MatchCollection results = Regex.Matches(branch_name, "[A-Za-z0-9]");
+            foreach (var v in results)
+            {
+                strRet += v.ToString();
+            }
+            branch_name = strRet;
+
+            process = new Process();
+            startInfo = new ProcessStartInfo();
             startInfo.FileName = initialize.gitPath_use;
             startInfo.Arguments = " log --oneline --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
             startInfo.UseShellExecute = false;
@@ -71,7 +92,7 @@ namespace Awake.Views.Pages
 
             string load_info_01 = process.StandardOutput.ReadToEnd();
             currHash = load_info_01.Split("^^")[0];
-   
+
 
             process = new Process();
             startInfo = new ProcessStartInfo();
@@ -90,8 +111,7 @@ namespace Awake.Views.Pages
             string load_info_02 = process.StandardOutput.ReadToEnd();
 
             CommiteCollection.Clear();
-            CommiteCollection2.Clear();
-            InitializeData(30);
+            InitializeData(25);
             InitializeComponent();
 
             lblCurrHash.Content = currHash;
@@ -102,27 +122,7 @@ namespace Awake.Views.Pages
             process = new Process();
             startInfo = new ProcessStartInfo();
             startInfo.FileName = initialize.gitPath_use;
-            startInfo.Arguments = " log --oneline origin/master --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
-            startInfo.UseShellExecute = false;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardError = false;
-            startInfo.CreateNoWindow = true;
-            startInfo.WorkingDirectory = initialize.加载路径;
-
-            process.StartInfo = startInfo;
-            process.Start();
-            process.WaitForExit();
-
-            load_info_01 = process.StandardOutput.ReadToEnd();
-            currHash = load_info_01.Split("^^")[0];
-
-            commit.ItemsSource = CommiteCollection;
-
-
-            process = new Process();
-            startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use;
-            startInfo.Arguments = " log --oneline --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
+            startInfo.Arguments = $" log --oneline origin/{branch_name} --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
             startInfo.RedirectStandardError = false;
@@ -136,58 +136,19 @@ namespace Awake.Views.Pages
             string load_info_03 = process.StandardOutput.ReadToEnd();
             currHash = load_info_03.Split("^^")[0];
 
-            process = new Process();
-            startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use;
-            startInfo.Arguments = " remote -v";
-            startInfo.UseShellExecute = false;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardError = false;
-            startInfo.CreateNoWindow = true;
-            startInfo.WorkingDirectory = initialize.加载路径;
-
-            process.StartInfo = startInfo;
-            process.Start();
-            process.WaitForExit();
-
-            load_info_02 = process.StandardOutput.ReadToEnd();
-
-            CommiteCollection.Clear();
-            CommiteCollection2.Clear();
-            InitializeData(30);
-            InitializeComponent();
-
-            lblCurrHash.Content = currHash;
-            lblCurrDate.Content = load_info_03.Split("^^")[2];
-            lblCurrMessage.Content = load_info_03.Split("^^")[1];
-            lblCurrGit.Content = load_info_02.Split("\\n")[0].Split(" ")[0];
-
-            process = new Process();
-            startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use;
-            startInfo.Arguments = " log --oneline origin/main --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
-            startInfo.UseShellExecute = false;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardError = false;
-            startInfo.CreateNoWindow = true;
-            startInfo.WorkingDirectory = initialize.加载路径;
-
-            process.StartInfo = startInfo;
-            process.Start();
-            process.WaitForExit();
-
-            load_info_03 = process.StandardOutput.ReadToEnd();
-            currHash = load_info_03.Split("^^")[0];
-
-            commit2.ItemsSource = CommiteCollection2;
+            commit.ItemsSource = CommiteCollection;
         }
+
+
+
+
         private void InitializeData(int setting_show)
         {
 
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = initialize.gitPath_use;
-            startInfo.Arguments = " --no-pager log origin/master --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1000";
+            startInfo.Arguments = $" --no-pager log origin/{branch_name} --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1000";
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
             startInfo.RedirectStandardError = true;
@@ -223,9 +184,9 @@ namespace Awake.Views.Pages
                     item1.Use_start = true;
                     item1.Checked = false;
 
+
                     if (currHash == item1.Hash)
                     {
-                  
                         item1.Use_start = false;
                         item1.Checked = true;
                     }
@@ -246,81 +207,7 @@ namespace Awake.Views.Pages
                 CommiteCollection.Add(commits[i]);
             }
 
-
-
-            process = new Process();
-            startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use;
-            startInfo.Arguments = " --no-pager log origin/main --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1000";
-            startInfo.UseShellExecute = false;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardError = true;
-            startInfo.CreateNoWindow = true;
-            startInfo.WorkingDirectory = initialize.加载路径;
-
-            process.StartInfo = startInfo;
-
-            idx = 0;
-            number_show = 0;
-            commits2 = new List<CommitItem>();
-
-            bool local_check = false;
-            process.ErrorDataReceived += new DataReceivedEventHandler(delegate (object sender, DataReceivedEventArgs e)
-            {
-
-            });
-            process.OutputDataReceived += new DataReceivedEventHandler(delegate (object sender, DataReceivedEventArgs e)
-            {
-                if (e.Data == null) return;
-                CommitItem item2 = new CommitItem();
-                string[] itemarr = e.Data.Split("^^");
-                if (itemarr.Length < 3)
-                {
-                    return;
-                }
-
-                if (number_show != setting_show)
-                {
-
-                    number_show += 1;
-                    item2.Hash = itemarr[0];
-                    item2.Message = itemarr[1];
-                    item2.Date = itemarr[2];
-                    item2.Id = idx++;
-                    item2.Use_start = true;
-                    item2.Checked = false;
-                         
-                    if (currHash == item2.Hash)
-                    {
-                        if (local_check == false)
-                        {
-
-                            local_check = true;
-                            item2.Use_start = false;
-                            item2.Checked = true;
-
-                        }
-                        
-                    }
-
-                    commits2.Add(item2);
-                }
-
-
-            });
-
-            process.Start();
-            process.BeginErrorReadLine();
-            process.BeginOutputReadLine();
-            process.WaitForExit();
-
-            for (int i = 0; i < commits2.Count(); i++)
-            {
-                CommiteCollection2.Add(commits2[i]);
-            }
-
         }
-
 
 
 
@@ -395,8 +282,8 @@ namespace Awake.Views.Pages
             string msg2 = process.StandardOutput.ReadToEnd();
 
             CommiteCollection.Clear();
-            CommiteCollection2.Clear();
-            InitializeData(30);
+            InitializeData(25);
+            InitializeComponent();
 
             lblCurrHash.Content = currHash;
             lblCurrDate.Content = msg.Split("^^")[2];
@@ -428,7 +315,6 @@ namespace Awake.Views.Pages
 
             string msg = process.StandardOutput.ReadToEnd();
             currHash = msg.Split("^^")[0];
-            //Debug.WriteLine(msg);
 
             process = new Process();
             startInfo = new ProcessStartInfo();
@@ -446,10 +332,8 @@ namespace Awake.Views.Pages
 
             string msg2 = process.StandardOutput.ReadToEnd();
 
-
             CommiteCollection.Clear();
-            CommiteCollection2.Clear();
-            InitializeData(30);
+            InitializeData(25);
             InitializeComponent();
 
             lblCurrHash.Content = currHash;
@@ -460,7 +344,7 @@ namespace Awake.Views.Pages
             process = new Process();
             startInfo = new ProcessStartInfo();
             startInfo.FileName = initialize.gitPath_use;
-            startInfo.Arguments = " log --oneline origin master --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
+            startInfo.Arguments = $" log --oneline origin/{branch_name} --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
             startInfo.RedirectStandardError = false;
@@ -475,6 +359,7 @@ namespace Awake.Views.Pages
             currHash = msg.Split("^^")[0];
 
             commit.ItemsSource = CommiteCollection;
+
         }
         private void UpdateCode_Click(object sender, RoutedEventArgs e)
         {
@@ -494,26 +379,85 @@ namespace Awake.Views.Pages
             btnUpdateCode.IsEnabled = false;
 
             CommiteCollection.Clear();
-            CommiteCollection2.Clear();
-
-            InitializeData(30);
+            InitializeData(25);
+            InitializeComponent();
 
             commit.ItemsSource = CommiteCollection;
         }
 
         private void DataGrid_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
+
+
             if (check_add == 0)
             {
                 check_add += 1;
                 var scrollViewer = e.OriginalSource as ScrollViewer;
                 if (e.VerticalOffset != 0 && e.VerticalOffset == scrollViewer.ScrollableHeight)
                 {
+
+                    Process process = new Process();
+                    ProcessStartInfo startInfo = new ProcessStartInfo();
+                    startInfo.FileName = initialize.gitPath_use;
+                    startInfo.Arguments = " log --oneline --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
+                    startInfo.UseShellExecute = false;
+                    startInfo.RedirectStandardOutput = true;
+                    startInfo.RedirectStandardError = false;
+                    startInfo.CreateNoWindow = true;
+                    startInfo.WorkingDirectory = initialize.加载路径;
+
+                    process.StartInfo = startInfo;
+                    process.Start();
+                    process.WaitForExit();
+
+                    string msg = process.StandardOutput.ReadToEnd();
+                    currHash = msg.Split("^^")[0];
+
+                    process = new Process();
+                    startInfo = new ProcessStartInfo();
+                    startInfo.FileName = initialize.gitPath_use;
+                    startInfo.Arguments = " remote -v";
+                    startInfo.UseShellExecute = false;
+                    startInfo.RedirectStandardOutput = true;
+                    startInfo.RedirectStandardError = false;
+                    startInfo.CreateNoWindow = true;
+                    startInfo.WorkingDirectory = initialize.加载路径;
+
+                    process.StartInfo = startInfo;
+                    process.Start();
+                    process.WaitForExit();
+
+                    string msg2 = process.StandardOutput.ReadToEnd();
+
+
                     number_add += 10;
                     CommiteCollection.Clear();
-                    CommiteCollection2.Clear();
                     InitializeData(number_add);
+                    InitializeComponent();
 
+                    lblCurrHash.Content = currHash;
+                    lblCurrDate.Content = msg.Split("^^")[2];
+                    lblCurrMessage.Content = msg.Split("^^")[1];
+                    lblCurrGit.Content = msg2.Split("\\n")[0].Split(" ")[0];
+
+                    process = new Process();
+                    startInfo = new ProcessStartInfo();
+                    startInfo.FileName = initialize.gitPath_use;
+                    startInfo.Arguments = $" log --oneline origin/{branch_name} --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
+                    startInfo.UseShellExecute = false;
+                    startInfo.RedirectStandardOutput = true;
+                    startInfo.RedirectStandardError = false;
+                    startInfo.CreateNoWindow = true;
+                    startInfo.WorkingDirectory = initialize.加载路径;
+
+                    process.StartInfo = startInfo;
+                    process.Start();
+                    process.WaitForExit();
+
+                    msg = process.StandardOutput.ReadToEnd();
+                    currHash = msg.Split("^^")[0];
+
+                    commit.ItemsSource = CommiteCollection;
                 }
             }
 

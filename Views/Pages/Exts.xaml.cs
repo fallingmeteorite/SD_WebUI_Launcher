@@ -66,20 +66,6 @@ namespace Awake.Views.Pages
         {
             Button btn = (Button)sender;
 
-            Process process1 = new Process();
-            ProcessStartInfo startInfo1 = new ProcessStartInfo();
-            startInfo1.FileName = initialize.gitPath_use;
-            startInfo1.Arguments = " fetch  --all"; //同步云端更新日志到本地
-            startInfo1.UseShellExecute = false;
-            startInfo1.RedirectStandardOutput = true;
-            startInfo1.RedirectStandardError = false;
-            startInfo1.CreateNoWindow = true;
-            startInfo1.WorkingDirectory = (string)btn.Tag;
-
-            process1.StartInfo = startInfo1;
-            process1.Start();
-            process1.WaitForExit();
-
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = initialize.gitPath_use;

@@ -56,7 +56,7 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <ui:SymbolIcon Margin="0,0,6,0" Symbol="DeveloperBoard24" />
-                        <TextBlock Text="稳定版(main) " FontSize="16"/>
+                        <TextBlock Text="稳定版" FontSize="16"/>
                     </StackPanel>
                 </TabItem.Header>
                 <ui:DataGrid x:Name="commit" ScrollViewer.ScrollChanged="DataGrid_ScrollChanged" ScrollViewer.VerticalScrollBarVisibility="Auto" MaxHeight="700"
@@ -70,32 +70,6 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                        <Button Content="安装此版本" Tag="{Binding Hash}" Click="setup_Click" Width="100" IsEnabled="{Binding Use_start}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </ui:DataGrid>
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <ui:SymbolIcon Margin="0,0,6,0" Symbol="DeveloperBoardLightning20" />
-                        <TextBlock Text="稳定版(master)" FontSize="16"/>
-                    </StackPanel>
-                </TabItem.Header>
-                <ui:DataGrid x:Name="commit2" ScrollViewer.ScrollChanged="DataGrid_ScrollChanged" ScrollViewer.VerticalScrollBarVisibility="Auto"  MaxHeight="700"
-                        AutoGenerateColumns="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="短hash" Binding="{Binding Hash}" CanUserResize="False" IsReadOnly="True" Width="80"/>
-                        <DataGridTextColumn Header="提交信息" Binding="{Binding Message}" CanUserResize="False" IsReadOnly="True" Width="*"/>
-                        <DataGridTextColumn Header="提交日期" Binding="{Binding Date}" CanUserResize="False" IsReadOnly="True"  Width="140"/>
-                        <DataGridCheckBoxColumn Header="当前" Binding="{Binding Checked}"  CanUserResize="False" IsReadOnly="True"  Width="35" />
-                        <DataGridTemplateColumn Header="版本操作" Width="100">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" >
                                         <Button Content="安装此版本" Tag="{Binding Hash}" Click="setup_Click" Width="100" IsEnabled="{Binding Use_start}"/>
                                     </StackPanel>
                                 </DataTemplate>
