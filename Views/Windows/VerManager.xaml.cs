@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,11 +25,11 @@ namespace Awake.Views.Windows
 {
     public class ExtTagItem
     {
-        public string Ext { get; set; }
-        public string Hash { get; set; }
-        public string Message { get; set; }
-        public string Date { get; set; }
-        public string Tag { get; set; }
+        public string? Ext { get; set; }
+        public string? Hash { get; set; }
+        public string? Message { get; set; }
+        public string? Date { get; set; }
+        public string? Tag { get; set; }
     }
     /// <summary>
     /// VerManager.xaml 的交互逻辑
@@ -37,15 +38,12 @@ namespace Awake.Views.Windows
     {
         private string currExt;
         private string currHash;
+        public static string branch_name = "";
         private List<ExtTagItem> tags;
         public List<CommitItem> commits;
         public ObservableCollection<CommitItem> CommiteCollection = new();
         public ObservableCollection<CommitItem> CommiteTagCollection = new();
         private string giturl;
-        public VerManager()
-        {
-            InitializeComponent();
-        }
 
         public VerManager(string giturl, string ext)
         {
@@ -79,6 +77,29 @@ namespace Awake.Views.Windows
 
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = initialize.gitPath_use;
+            startInfo.Arguments = " rev-parse --abbrev-ref HEAD";
+            startInfo.UseShellExecute = false;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardError = false;
+            startInfo.CreateNoWindow = true;
+            startInfo.WorkingDirectory = initialize.加载路径;
+
+            process.StartInfo = startInfo;
+            process.Start();
+            process.WaitForExit();
+
+            branch_name = process.StandardOutput.ReadToEnd();
+            string strRet = "";
+            MatchCollection results = Regex.Matches(branch_name, "[A-Za-z0-9]");
+            foreach (var v in results)
+            {
+                strRet += v.ToString();
+            }
+            branch_name = strRet;
+
+            process = new Process();
+            startInfo = new ProcessStartInfo();
             startInfo.FileName = initialize.gitPath_use;
             startInfo.Arguments = " log --oneline --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
             startInfo.UseShellExecute = false;
@@ -119,7 +140,6 @@ namespace Awake.Views.Windows
             InitializeData(ext);
 
             commit.ItemsSource = CommiteCollection;
-            commit2.ItemsSource = CommiteTagCollection;
         }
 
         private void InitializeData(string ext)
@@ -128,7 +148,7 @@ namespace Awake.Views.Windows
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = initialize.gitPath_use;
-            startInfo.Arguments = "  --no-pager log main --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 150";
+            startInfo.Arguments = $"  --no-pager log {branch_name} --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 150";
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
             startInfo.RedirectStandardError = true;
@@ -176,81 +196,12 @@ namespace Awake.Views.Windows
             process.BeginOutputReadLine();
             process.WaitForExit();
 
-            if (commits.Count <= 0)
+
+            for (int i = 0; i < commits.Count(); i++)
             {
-                process = new Process();
-                startInfo = new ProcessStartInfo();
-                startInfo.FileName = initialize.gitPath_use;
-                startInfo.Arguments = "  --no-pager log master --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 150";
-                startInfo.UseShellExecute = false;
-                startInfo.RedirectStandardOutput = true;
-                startInfo.RedirectStandardError = true;
-                startInfo.CreateNoWindow = true;
-                startInfo.WorkingDirectory = ext;
-
-                process.StartInfo = startInfo;
-
-                idx = 0;
-                commits = new List<CommitItem>();
-
-                process.ErrorDataReceived += new DataReceivedEventHandler(delegate (object sender, DataReceivedEventArgs e)
-                {
-
-                });
-                process.OutputDataReceived += new DataReceivedEventHandler(delegate (object sender, DataReceivedEventArgs e)
-                {
-                    if (e.Data == null) return;
-
-                    CommitItem item1 = new CommitItem();
-                    string[] itemarr = e.Data.Split("^^");
-                    if (itemarr.Length < 3)
-                    {
-                        return;
-                    }
-
-                    item1.Hash = itemarr[0];
-                    item1.Message = itemarr[1];
-                    item1.Date = itemarr[2];
-                    item1.Id = idx++;
-                    item1.Use_start = true;
-                    item1.Checked = false;
-
-                    for (int j = 0; j < tags.Count(); j++)
-                    {
-                        if (currExt != tags[j].Ext) continue;
-                        if (item1.Hash == tags[j].Hash)
-                        {
-                            item1.Tag = tags[j].Tag;
-                        }
-                    }
-
-                    if (currHash == item1.Hash)
-                    {
-                        item1.Use_start = false;
-                        item1.Checked = true;
-                    }
-
-                    commits.Add(item1);
-                });
-
-                process.Start();
-                process.BeginErrorReadLine();
-                process.BeginOutputReadLine();
-                process.WaitForExit();
-
-
-                for (int i = 0; i < commits.Count(); i++)
-                {
-                    CommiteCollection.Add(commits[i]);
-                }
+                CommiteCollection.Add(commits[i]);
             }
-            else
-            {
-                for (int i = 0; i < commits.Count(); i++)
-                {
-                    CommiteCollection.Add(commits[i]);
-                }
-            }
+
         }
 
         private void setup_Click(object sender, RoutedEventArgs e)
@@ -318,7 +269,6 @@ namespace Awake.Views.Windows
             InitializeData(currExt);
 
             commit.ItemsSource = CommiteCollection;
-            commit2.ItemsSource = CommiteTagCollection;
             System.Windows.MessageBox.Show("安装完成,请继续操作");
         }
 

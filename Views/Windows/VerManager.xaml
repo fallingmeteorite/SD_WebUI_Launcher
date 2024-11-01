@@ -41,41 +41,15 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <ui:SymbolIcon Margin="0,0,6,0" Symbol="DeveloperBoard24" />
-                        <TextBlock Text="稳定版(main) " FontSize="16"/>
+                        <TextBlock Text="稳定版" FontSize="16"/>
                     </StackPanel>
                 </TabItem.Header>
-                <ui:DataGrid x:Name="commit2"
+                <ui:DataGrid x:Name="commit"
                     AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="短Hash" Binding="{Binding Hash}" Width="80" />
                         <DataGridTextColumn Header="信息" Binding="{Binding Message}" Width="*" />
                         <DataGridTextColumn Header="日期" Binding="{Binding Date}" Width="140" />
-                        <DataGridCheckBoxColumn Header="当前" Binding="{Binding Checked}" Width="35"/>
-                        <DataGridTemplateColumn Header="操作" Width="100">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <Button Content="安装此版本" Tag="{Binding Hash}" Click="setup_Click" Width="100"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </ui:DataGrid>
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <ui:SymbolIcon Margin="0,0,6,0" Symbol="DeveloperBoardLightning20" />
-                        <TextBlock Text="稳定版(master)" FontSize="16"/>
-                    </StackPanel>
-                </TabItem.Header>
-                <ui:DataGrid x:Name="commit" ScrollViewer.VerticalScrollBarVisibility="Visible"  MaxHeight="650"
-                        AutoGenerateColumns="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="短Hash" Binding="{Binding Hash}" Width="80"/>
-                        <DataGridTextColumn Header="信息" Binding="{Binding Message}" Width="*"/>
-                        <DataGridTextColumn Header="日期" Binding="{Binding Date}" Width="140"/>
                         <DataGridCheckBoxColumn Header="当前" Binding="{Binding Checked}" Width="35"/>
                         <DataGridTemplateColumn Header="操作" Width="100">
                             <DataGridTemplateColumn.CellTemplate>

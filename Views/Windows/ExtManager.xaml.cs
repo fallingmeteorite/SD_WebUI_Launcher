@@ -46,7 +46,6 @@ namespace Awake.Views.Windows
 
             }
 
-
             var httpClient = new HttpClient();
             var jsonOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web);
 

@@ -35,7 +35,7 @@ namespace Awake.Views.Pages
             if (initialize.启用自定义路径)
             {
                 initialize.加载路径 = initialize.本地路径;
-                initialize.gitPath_use = initialize.gitPath + @"\git.exe";
+                initialize.gitPath_use = initialize.gitPath;
                 if (!File.Exists(initialize.gitPath_use))
                 {
                     System.Windows.MessageBox.Show("自定义GIT路径错误或未选择，程序错误即将关闭！");
