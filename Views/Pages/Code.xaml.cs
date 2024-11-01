@@ -472,11 +472,11 @@ namespace Awake.Views.Pages
     }
     public class TagItem
     {
-        public string Hash { get; set; }
+        public string? Hash { get; set; }
 
-        public string Message { get; set; }
+        public string? Message { get; set; }
 
-        public string Date { get; set; }
+        public string? Date { get; set; }
     }
 
 }
