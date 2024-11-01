@@ -31,7 +31,27 @@ namespace Awake.Views.Windows
 
         public static void InitExtData()
         {
+            if (initialize.启用自定义路径)
+            {
+                initialize.加载路径 = initialize.本地路径;
+                initialize.gitPath_use = initialize.gitPath;
+                if (!System.IO.File.Exists(initialize.gitPath_use))
+                {
+                    System.Windows.MessageBox.Show("自定义GIT路径错误或未选择，程序错误即将关闭！");
+                    Process.GetCurrentProcess().Kill();
+                }
+            }
+            else
+            {
+                initialize.加载路径 = initialize.工作路径;
+                initialize.gitPath_use = initialize.工作路径 + @"\GIT\mingw64\bin\git.exe";
+                if (!System.IO.File.Exists(initialize.gitPath_use))
+                {
+                    System.Windows.MessageBox.Show("工作路径下即整合包未存在GIT，程序错误即将关闭！");
+                    Process.GetCurrentProcess().Kill();
+                }
 
+            }
 
             Store.extLocal = new System.Collections.ObjectModel.ObservableCollection<ExtItem>();
 
