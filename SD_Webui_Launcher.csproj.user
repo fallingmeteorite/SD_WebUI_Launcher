@@ -9,30 +9,12 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="modelCardshow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="model_download_list.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\Windows\Model_content.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\Windows\shell.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="modelCardshow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="model_download_list.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\Windows\MainWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\Windows\Model_content.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Windows\shell.xaml">
