@@ -24,12 +24,17 @@ namespace Awake
 
         }
 
-        public static List<string> 显卡列表 = new List<string>();
+        
         public static string 背景颜色 = "";
         public static string 背景图片 = "";
+
         public static int 背景亮度 = 100;
         public static int 图片亮度 = 100;
-        public static bool _SD启动 = false;//SD,启动的白屏动画效果开关!
+    
+        public static bool _SD启动 = false;//SD启动的白屏动画效果开关
+
+        public static List<string> 显卡列表 = new List<string>();
+
 
         //下面确定SD_WebUI是否已经安装
         public static bool 已下载WebUI = false;
@@ -43,8 +48,7 @@ namespace Awake
         public static bool 使用CPU进行推理 = false;
         public static bool 关闭模型hash计算 = false;
         public static bool 冻结设置 = false;
-        public static bool 快速启动;
-        internal static bool 启用自定义路径;
+        public static bool 快速启动 = false;
 
         //优化
         public static bool 上投采样 = false;
@@ -68,19 +72,21 @@ namespace Awake
 
         //下面是一些路径管理的具体实现
         public static string 工作路径 = "";
-        public static string gitPath = "";
-        public static string venvPath = "";
+        public static string git_path = "";
+        public static string venv_path = "";
         public static string 程序所在目录 = "";
         public static string 本地路径 = "";
+
+        public static bool enable_custom_path;
 
         //下面是全局硬件判断
         public static string _cpuname = "";
         public static string _GPUname = "";
-        public static int _UseGPUindex = 0;
         public static string 相册图片数量 = "";
         public static string 参数列表 = "";//所有启动时传递的参数挂到这里，全局可编辑与访问
-        public static string 加载路径;
-        public static string gitPath_use;
+
+        public static int _UseGPUindex = 0;
+
 
         public static void Read_setting()
         {
@@ -98,7 +104,6 @@ namespace Awake
                 if (lines_setting[0] == "True")
                 {
                     initialize.浏览器启动 = true;
-
 
                 }
                 if (lines_setting[1] == "True")
@@ -134,7 +139,7 @@ namespace Awake
 
                 if (lines_setting[7] == "True")
                 {
-                    initialize.启用自定义路径 = true;
+                    initialize.enable_custom_path = true;
                 }
 
                 if (lines_setting[8] == "True")
@@ -176,15 +181,15 @@ namespace Awake
                 if (lines_setting[15] == "True")
                 {
                     initialize.启用替代布局 = true;
+                }            
+                if (lines_setting[20] == "True")
+                {
+                    initialize.Doggettx优化 = true;
                 }
                 initialize.显卡类型名 = lines_setting[16];
                 initialize._显卡类型 = lines_setting[17];
                 initialize._WebUI显存压力优化设置 = lines_setting[18];
                 initialize._WebUI主题颜色 = lines_setting[19];
-                if (lines_setting[20] == "True")
-                {
-                    initialize.Doggettx优化 = true;
-                }
 
             }
             catch
@@ -196,7 +201,6 @@ namespace Awake
         public static void 选择工作路径()
         {
             FolderBrowserDialog folder = new FolderBrowserDialog();
-            folder.Description = "请选择WebUI工作目录，至少保留25GB硬盘空间";
             if (folder.ShowDialog() == DialogResult.OK)
             {
                 initialize.工作路径 = folder.SelectedPath;
@@ -209,31 +213,32 @@ namespace Awake
         }
         public static void 选择Git路径()
         {
-            FolderBrowserDialog folder = new FolderBrowserDialog();
-            folder.Description = "请选择Git.exe所在目录";
-            if (folder.ShowDialog() == DialogResult.OK)
+            var openFileDialog = new OpenFileDialog();        
+            openFileDialog.Filter = "|git.exe";
+            openFileDialog.Multiselect = false;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                initialize.gitPath = folder.SelectedPath;
-                File.WriteAllText(@".SD_Webui_Launcher_log\gitpath.txt", initialize.gitPath);
-
+                initialize.git_path = openFileDialog.FileName;
+                File.WriteAllText(@".SD_Webui_Launcher_log\gitpath.txt", initialize.git_path);
             }
+
         }
         public static void 选择VENV路径()
         {
-            FolderBrowserDialog folder = new FolderBrowserDialog();
-            folder.Description = "请选择虚拟环境所在目录";
-            if (folder.ShowDialog() == DialogResult.OK)
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "|python.exe";
+            openFileDialog.Multiselect = false;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)                           
             {
-                initialize.venvPath = folder.SelectedPath;
-                File.WriteAllText(@".SD_Webui_Launcher_log\venvpath.txt", initialize.venvPath);
-
-            }
+                initialize.venv_path = openFileDialog.FileName;
+                File.WriteAllText(@".SD_Webui_Launcher_log\venvpath.txt", initialize.venv_path);
+            }        
         }
+
 
         public static void 本地运行路径()
         {
             FolderBrowserDialog folder = new FolderBrowserDialog();
-            folder.Description = "请选择自定义SD所在目录";
             if (folder.ShowDialog() == DialogResult.OK)
             {
                 initialize.本地路径 = folder.SelectedPath;
@@ -327,7 +332,7 @@ namespace Awake
             if (File.Exists(@".SD_Webui_Launcher_log\gitpath.txt"))
             {
                 // 如果文件存在，读取其中的内容到gitpath全局变量中
-                initialize.gitPath = File.ReadAllText(@".SD_Webui_Launcher_log\gitpath.txt");
+                initialize.git_path = File.ReadAllText(@".SD_Webui_Launcher_log\gitpath.txt");
             }
         }
         public static void CheckVENVPathFile()//这里在初始化后从log里读取VENV的路径
@@ -336,7 +341,7 @@ namespace Awake
             if (File.Exists(filePath))
             {
                 // 如果文件存在，读取其中的内容到venvpath全局变量中
-                initialize.venvPath = File.ReadAllText(filePath);
+                initialize.venv_path = File.ReadAllText(filePath);
             }
         }
         public static void Checkstartpath_local()//这里在初始化后从log里读取VENV的路径
