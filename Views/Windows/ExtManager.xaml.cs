@@ -20,15 +20,17 @@ namespace Awake.Views.Windows
     public partial class ExtManager : UiWindow
     {
         ExtObj exts;
+        public string git_path_use = "";
+        public string working_directory = "";
         public ObservableCollection<Extension2> ExtCollection = new();
 
         public ExtManager()
         {
-            if (initialize.启用自定义路径)
+            if (initialize.enable_custom_path)
             {
-                initialize.加载路径 = initialize.本地路径;
-                initialize.gitPath_use = initialize.gitPath;
-                if (!File.Exists(initialize.gitPath_use))
+                working_directory = initialize.本地路径;
+                git_path_use = initialize.git_path;
+                if (!File.Exists(git_path_use))
                 {
                     System.Windows.MessageBox.Show("自定义GIT路径错误或未选择，程序错误即将关闭！");
                     Process.GetCurrentProcess().Kill();
@@ -36,9 +38,9 @@ namespace Awake.Views.Windows
             }
             else
             {
-                initialize.加载路径 = initialize.工作路径;
-                initialize.gitPath_use = initialize.工作路径 + @"\GIT\mingw64\bin\git.exe";
-                if (!File.Exists(initialize.gitPath_use))
+                working_directory = initialize.工作路径;
+                git_path_use = initialize.工作路径 + @"\GIT\mingw64\bin\git.exe";
+                if (!File.Exists(git_path_use))
                 {
                     System.Windows.MessageBox.Show("工作路径下即整合包未存在GIT，程序错误即将关闭！");
                     Process.GetCurrentProcess().Kill();
@@ -57,7 +59,7 @@ namespace Awake.Views.Windows
                 response.EnsureSuccessStatusCode();
                 using var stream = response.Content.ReadAsStream();
                 exts = JsonSerializer.Deserialize<ExtObj>(stream, jsonOptions);
-                var extsDir1 = Directory.EnumerateDirectories(initialize.加载路径 + @"\extensions");
+                var extsDir1 = Directory.EnumerateDirectories(working_directory + @"\extensions");
 
                 for (var i = 0; i < exts.extensions.Count(); i++)
                 {
@@ -89,19 +91,19 @@ namespace Awake.Views.Windows
 
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use;
+            startInfo.FileName = git_path_use;
             startInfo.Arguments = " clone " + btn.Tag;
             startInfo.UseShellExecute = true;
             startInfo.RedirectStandardOutput = false;
             startInfo.CreateNoWindow = false;
-            startInfo.WorkingDirectory = (initialize.加载路径 + @"\extensions");
+            startInfo.WorkingDirectory = (working_directory + @"\extensions");
 
             process.StartInfo = startInfo;
             process.Start();
             process.WaitForExit();
 
             ExtCollection.Clear();
-            var extsDir1 = Directory.EnumerateDirectories(initialize.加载路径 + @"\extensions");
+            var extsDir1 = Directory.EnumerateDirectories(working_directory + @"\extensions");
             for (var i = 0; i < exts.extensions.Count(); i++)
             {
                 Extension2 ext2 = new Extension2();

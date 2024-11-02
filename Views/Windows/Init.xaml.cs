@@ -28,14 +28,17 @@ namespace Awake.Views.Windows
     /// </summary>
     public partial class Init : UiWindow
     {
-
+     
         public static void InitExtData()
         {
-            if (initialize.启用自定义路径)
+            string working_directory = "";
+            string git_path_use = "";
+
+            if (initialize.enable_custom_path)
             {
-                initialize.加载路径 = initialize.本地路径;
-                initialize.gitPath_use = initialize.gitPath;
-                if (!System.IO.File.Exists(initialize.gitPath_use))
+                working_directory = initialize.本地路径;
+                git_path_use = initialize.git_path;
+                if (!System.IO.File.Exists(git_path_use))
                 {
                     System.Windows.MessageBox.Show("自定义GIT路径错误或未选择，程序错误即将关闭！");
                     Process.GetCurrentProcess().Kill();
@@ -43,9 +46,9 @@ namespace Awake.Views.Windows
             }
             else
             {
-                initialize.加载路径 = initialize.工作路径;
-                initialize.gitPath_use = initialize.工作路径 + @"\GIT\mingw64\bin\git.exe";
-                if (!System.IO.File.Exists(initialize.gitPath_use))
+                working_directory = initialize.工作路径;
+                git_path_use = initialize.工作路径 + @"\GIT\mingw64\bin\git.exe";
+                if (!System.IO.File.Exists(git_path_use))
                 {
                     System.Windows.MessageBox.Show("工作路径下即整合包未存在GIT，程序错误即将关闭！");
                     Process.GetCurrentProcess().Kill();
@@ -61,12 +64,12 @@ namespace Awake.Views.Windows
 
             process = new Process();
             startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use;
+            startInfo.FileName = git_path_use;
             startInfo.Arguments = " config --global --add safe.directory *";
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = false;
             startInfo.CreateNoWindow = true;
-            startInfo.WorkingDirectory = (initialize.加载路径 + @"\extensions");
+            startInfo.WorkingDirectory = (working_directory + @"\extensions");
 
             process.StartInfo = startInfo;
             process.Start();
@@ -82,16 +85,16 @@ namespace Awake.Views.Windows
                 using var stream = response.Content.ReadAsStream();
                 Store.extRemote = JsonSerializer.Deserialize<List<ExtRemote>>(stream, jsonOptions);
             }
-            if (!Directory.Exists(initialize.加载路径 + @"\extensions"))
+            if (!Directory.Exists(working_directory + @"\extensions"))
             {
                 return;
             }
-            List<string> extsDir = new List<string>(Directory.EnumerateDirectories(initialize.加载路径 + @"\extensions"));
+            List<string> extsDir = new List<string>(Directory.EnumerateDirectories(working_directory + @"\extensions"));
             for (int i = 0; i < extsDir.Count(); i++)
             {
                 process = new Process();
                 startInfo = new ProcessStartInfo();
-                startInfo.FileName = initialize.gitPath_use;
+                startInfo.FileName = git_path_use;
                 startInfo.Arguments = " remote -v ";
                 startInfo.UseShellExecute = false;
                 startInfo.RedirectStandardOutput = true;
@@ -115,7 +118,7 @@ namespace Awake.Views.Windows
 
                     process = new Process();
                     startInfo = new ProcessStartInfo();
-                    startInfo.FileName = initialize.gitPath_use;
+                    startInfo.FileName = git_path_use;
                     startInfo.Arguments = " log --oneline --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
                     startInfo.UseShellExecute = false;
                     startInfo.RedirectStandardOutput = true;

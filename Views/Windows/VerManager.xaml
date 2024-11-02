@@ -44,8 +44,7 @@
                         <TextBlock Text="稳定版" FontSize="16"/>
                     </StackPanel>
                 </TabItem.Header>
-                <ui:DataGrid x:Name="commit"
-                    AutoGenerateColumns="False">
+                <ui:DataGrid x:Name="commit" ScrollViewer.VerticalScrollBarVisibility="Auto" MaxHeight="410" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="短Hash" Binding="{Binding Hash}" Width="80" />
                         <DataGridTextColumn Header="信息" Binding="{Binding Message}" Width="*" />
@@ -55,7 +54,7 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <Button Content="安装此版本" Tag="{Binding Hash}" Click="setup_Click" Width="100"/>
+                                        <Button Content="安装此版本" Tag="{Binding Hash}" Click="setup_Click" Width="100" IsEnabled="{Binding use_start}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

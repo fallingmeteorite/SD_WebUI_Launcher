@@ -30,13 +30,16 @@ namespace Awake.Views.Pages
 {
     public partial class Exts
     {
+        public string working_directory = "";
+        public string git_path_use = "";
+
         public Exts()
         {
-            if (initialize.启用自定义路径)
+            if (initialize.enable_custom_path)
             {
-                initialize.加载路径 = initialize.本地路径;
-                initialize.gitPath_use = initialize.gitPath;
-                if (!File.Exists(initialize.gitPath_use))
+                working_directory = initialize.本地路径;
+                git_path_use = initialize.git_path;
+                if (!File.Exists(git_path_use))
                 {
                     System.Windows.MessageBox.Show("自定义GIT路径错误或未选择，程序错误即将关闭！");
                     Process.GetCurrentProcess().Kill();
@@ -44,9 +47,9 @@ namespace Awake.Views.Pages
             }
             else
             {
-                initialize.加载路径 = initialize.工作路径;
-                initialize.gitPath_use = initialize.工作路径 + @"\GIT\mingw64\bin\git.exe";
-                if (!File.Exists(initialize.gitPath_use))
+                working_directory = initialize.工作路径;
+                git_path_use = initialize.工作路径 + @"\GIT\mingw64\bin\git.exe";
+                if (!File.Exists(git_path_use))
                 {
                     System.Windows.MessageBox.Show("工作路径下即整合包未存在GIT，程序错误即将关闭！");
                     Process.GetCurrentProcess().Kill();
@@ -60,7 +63,7 @@ namespace Awake.Views.Pages
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("Explorer.exe", initialize.加载路径 + @"\extensions");
+            Process.Start("Explorer.exe", working_directory + @"\extensions");
         }
         private void checkUpdateExt_Click(object sender, RoutedEventArgs e)
         {
@@ -68,7 +71,7 @@ namespace Awake.Views.Pages
 
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use;
+            startInfo.FileName = git_path_use;
             startInfo.Arguments = " reset --hard";
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
@@ -80,7 +83,7 @@ namespace Awake.Views.Pages
 
             process = new Process();
             startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use;
+            startInfo.FileName = git_path_use;
             startInfo.Arguments = " pull";
             startInfo.UseShellExecute = true;
             startInfo.RedirectStandardOutput = false;

@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
-using static Awake.initialize;
 
 namespace Awake.Views.Pages
 {
@@ -87,18 +86,18 @@ namespace Awake.Views.Pages
             {
                 工作路径展示.Text = initialize.工作路径;
             }
-            if (initialize.gitPath != "")
+            if (initialize.git_path != "")
             {
-                Git路径展示.Text = initialize.gitPath;
+                Git路径展示.Text = initialize.git_path;
             }
             else
             {
                 Git路径展示.Text = "暂未设置部署路径";
             }
 
-            if (initialize.venvPath != "")
+            if (initialize.venv_path != "")
             {
-                VENV路径展示.Text = initialize.venvPath;
+                VENV路径展示.Text = initialize.venv_path;
 
             }
             else
@@ -137,18 +136,18 @@ namespace Awake.Views.Pages
 
 
             工作路径展示.Text = initialize.工作路径;
-            if (initialize.gitPath != "")
+            if (initialize.git_path != "")
             {
-                Git路径展示.Text = initialize.gitPath;
+                Git路径展示.Text = initialize.git_path;
             }
             else
             {
                 Git路径展示.Text = "暂未设置部署路径";
             }
 
-            if (initialize.venvPath != "")
+            if (initialize.venv_path != "")
             {
-                VENV路径展示.Text = initialize.venvPath;
+                VENV路径展示.Text = initialize.venv_path;
 
             }
             else
@@ -327,11 +326,11 @@ namespace Awake.Views.Pages
             {
                 if (启用自定义路径.IsChecked == true)
                 {
-                    initialize.启用自定义路径 = true;
+                    initialize.enable_custom_path = true;
                 }
                 else
                 {
-                    initialize.启用自定义路径 = false;
+                    initialize.enable_custom_path = false;
 
                 }
             }
@@ -348,7 +347,7 @@ namespace Awake.Views.Pages
             try
             {
                 initialize.选择Git路径();
-                Git路径展示.Text = gitPath;
+                Git路径展示.Text = initialize.git_path;
             }
             catch
             {
@@ -362,7 +361,7 @@ namespace Awake.Views.Pages
             try
             {
                 initialize.选择VENV路径();
-                VENV路径展示.Text = venvPath;
+                VENV路径展示.Text = initialize.venv_path;
             }
 
             catch
@@ -376,7 +375,7 @@ namespace Awake.Views.Pages
             try
             {
                 initialize.本地运行路径();
-                本地工作路径展示.Text = 本地路径;
+                本地工作路径展示.Text = initialize.本地路径;
             }
             catch
             {
@@ -393,7 +392,7 @@ namespace Awake.Views.Pages
         {
 
 
-            if (已下载WebUI == false && 已安装WebUI == false && 已解压WebUI == false)
+            if (initialize.已下载WebUI == false && initialize.已安装WebUI == false && initialize.已解压WebUI == false)
             {
                 if (is_downloaded == false)
                 {
@@ -517,7 +516,7 @@ namespace Awake.Views.Pages
         private void 打开部署文件夹_Click(object sender, RoutedEventArgs e)
         {
             //用文件资源管理器打开工作路径
-            System.Diagnostics.Process.Start("explorer.exe", 工作路径);
+            System.Diagnostics.Process.Start("explorer.exe",initialize.工作路径);
         }
 
 

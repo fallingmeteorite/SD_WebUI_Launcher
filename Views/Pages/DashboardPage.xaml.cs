@@ -291,37 +291,37 @@ namespace Awake.Views.Pages
             {
                 模型资源列表.Children.Clear();
                 模型种类 = "[]";
-                loatmodel(模型排列, _searchName, 模型种类, 1);
+                Task task = loatmodel(模型排列, _searchName, 模型种类, 1);
             }
             if (模型类型选择器.SelectedIndex == 1)
             {
                 模型资源列表.Children.Clear();
                 模型种类 = "[5]";
-                loatmodel(模型排列, _searchName, 模型种类, 1);
+                Task task = loatmodel(模型排列, _searchName, 模型种类, 1);
             }
             if (模型类型选择器.SelectedIndex == 2)
             {
                 模型资源列表.Children.Clear();
                 模型种类 = "[6]";
-                loatmodel(模型排列, _searchName, 模型种类, 1);
+                Task task = loatmodel(模型排列, _searchName, 模型种类, 1);
             }
             if (模型类型选择器.SelectedIndex == 3)
             {
                 模型资源列表.Children.Clear();
                 模型种类 = "[7]";
-                loatmodel(模型排列, "", 模型种类, 1);
+                Task task = loatmodel(模型排列, "", 模型种类, 1);
             }
             if (模型类型选择器.SelectedIndex == 4)
             {
                 模型资源列表.Children.Clear();
                 模型种类 = "[1]";
-                loatmodel(模型排列, _searchName, 模型种类, 1);
+                Task task = loatmodel(模型排列, _searchName, 模型种类, 1);
             }
             if (模型类型选择器.SelectedIndex == 5)
             {
                 模型资源列表.Children.Clear();
                 模型种类 = "[2]";
-                loatmodel(模型排列, _searchName, 模型种类, 1);
+                Task task = loatmodel(模型排列, _searchName, 模型种类, 1);
             }
 
         }
@@ -472,12 +472,6 @@ namespace Awake.Views.Pages
 
 
         }
-
-        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Process.Start(new ProcessStartInfo("https://www.aigodlike.com/") { UseShellExecute = true });
-        }
-
 
     }
 

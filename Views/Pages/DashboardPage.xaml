@@ -83,15 +83,7 @@
                                         </Border.Background>
 
                                         <Canvas>
-                                            <TextBlock Text="AIGODLIKE-开源AI冒险社区" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="627,10,0,0" FontSize="20" Foreground="#FF9A33A5" FontFamily="Alimama ShuHeiTi Bold"/>
-
-                                            <Border CornerRadius="10" Style="{DynamicResource Button container style 02}" Canvas.Left="673" Canvas.Top="113" Width="190" HorizontalAlignment="Left" VerticalAlignment="Top" Height="60" MouseDown="Border_MouseDown" >
-                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                    <ui:SymbolIcon Symbol="Send20" Foreground="#FF420936" Width="35" Height="35" FontSize="35" Margin="0,0,10,0"/>
-                                                    <TextBlock Text="立即挑战" Foreground="#FF420936" FontSize="22" FontFamily="Alimama ShuHeiTi Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-                                                </StackPanel>
-                                            </Border>
+                                            <TextBlock Text="SD_Webui_Launcher" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" Foreground="#FF9A33A5" FontFamily="Alimama ShuHeiTi Bold" Canvas.Left="714" Canvas.Top="10"/>
 
                                         </Canvas>
                                     </Border>

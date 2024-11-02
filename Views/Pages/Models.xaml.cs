@@ -33,6 +33,8 @@ namespace Awake.Views.Pages
     /// </summary>
     public partial class Models : UiPage
     {
+        public string working_directory = "";
+
         public ObservableCollection<Embedding> HysCollection = new();
         public ObservableCollection<Embedding> EmbCollection = new();
         public ObservableCollection<CheckPoint> CksCollection = new();
@@ -43,15 +45,15 @@ namespace Awake.Views.Pages
         public Models()
         {
             InitializeComponent();
-            if (initialize.启用自定义路径)
+            if (initialize.enable_custom_path)
             {
-                initialize.加载路径 = initialize.本地路径;
+                working_directory = initialize.本地路径;
             }
             else
             {
-                initialize.加载路径 = initialize.工作路径;
+                working_directory = initialize.工作路径;
             }
-            if (!Directory.Exists(initialize.加载路径 + "\\models\\stable-diffusion"))
+            if (!Directory.Exists(working_directory + "\\models\\stable-diffusion"))
             {
                 System.Windows.MessageBox.Show("未在指定路径下找到目标文件夹，模型将不会正常读取显示！");
             }
@@ -59,27 +61,27 @@ namespace Awake.Views.Pages
         private void OpenCkpt_Click(object sender, EventArgs e)
         {
             Process.Start("Explorer.exe",
-                initialize.加载路径 + "\\models\\stable-diffusion");
+                working_directory + "\\models\\stable-diffusion");
         }
         private void OpenVAE_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("Explorer.exe",
-               initialize.加载路径 + "\\models\\vae");
+               working_directory + "\\models\\vae");
         }
         private void OpenEmb_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("Explorer.exe",
-               initialize.加载路径 + "\\embeddings");
+               working_directory + "\\embeddings");
         }
         private void OpenHys_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("Explorer.exe",
-               initialize.加载路径 + "\\models\\hypernetworks");
+               working_directory + "\\models\\hypernetworks");
         }
         private void OpenLoRA_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("Explorer.exe",
-               initialize.加载路径 + "\\models\\lora");
+               working_directory + "\\models\\lora");
         }
 
         
@@ -90,9 +92,9 @@ namespace Awake.Views.Pages
             {
                 System.Windows.Controls.Button btn = (System.Windows.Controls.Button)sender;
                 var model_name = btn.Tag.ToString();
-                System.IO.File.Delete(initialize.加载路径 + "\\models\\stable-diffusion\\" + model_name);
+                System.IO.File.Delete(working_directory + "\\models\\stable-diffusion\\" + model_name);
 
-                var dir = new DirectoryInfo(initialize.加载路径 + "\\models\\stable-diffusion\\");
+                var dir = new DirectoryInfo(working_directory + "\\models\\stable-diffusion\\");
                 FileInfo[] files = dir.GetFiles();
                 using (SHA256 mySHA256 = SHA256.Create())
                 {
@@ -135,10 +137,10 @@ namespace Awake.Views.Pages
             {
                 System.Windows.Controls.Button btn = (System.Windows.Controls.Button)sender;
                 var model_name = btn.Tag.ToString();
-                System.IO.File.Delete(initialize.加载路径 + "\\models\\vae\\" + model_name);
+                System.IO.File.Delete(working_directory + "\\models\\vae\\" + model_name);
 
                 VaesCollection.Clear();
-                var dir = new DirectoryInfo(initialize.加载路径 + "\\models\\vae");
+                var dir = new DirectoryInfo(working_directory + "\\models\\vae");
                 FileInfo[] files = dir.GetFiles();
 
                 foreach (FileInfo fInfo in files)
@@ -176,10 +178,10 @@ namespace Awake.Views.Pages
             {
                 System.Windows.Controls.Button btn = (System.Windows.Controls.Button)sender;
                 var model_name = btn.Tag.ToString();
-                System.IO.File.Delete(initialize.加载路径 + "\\models\\Lora\\" + model_name);
+                System.IO.File.Delete(working_directory + "\\models\\Lora\\" + model_name);
 
                 LorasCollection.Clear();
-                var dir = new DirectoryInfo(initialize.加载路径 + "\\models\\lora");
+                var dir = new DirectoryInfo(working_directory + "\\models\\lora");
                 FileInfo[] files = dir.GetFiles();
 
                 foreach (FileInfo fInfo in files)
@@ -218,11 +220,11 @@ namespace Awake.Views.Pages
             {
                 System.Windows.Controls.Button btn = (System.Windows.Controls.Button)sender;
                 var model_name = btn.Tag.ToString();
-                System.IO.File.Delete(initialize.加载路径 + "\\models\\hypernetworks\\" + model_name);
+                System.IO.File.Delete(working_directory + "\\models\\hypernetworks\\" + model_name);
 
 
                 HysCollection.Clear();
-                var dir = new DirectoryInfo(initialize.加载路径 + "\\models\\hypernetworks");
+                var dir = new DirectoryInfo(working_directory + "\\models\\hypernetworks");
                 FileInfo[] files = dir.GetFiles();
 
                 foreach (FileInfo fInfo in files)
@@ -261,10 +263,10 @@ namespace Awake.Views.Pages
             {
                 System.Windows.Controls.Button btn = (System.Windows.Controls.Button)sender;
                 var model_name = btn.Tag.ToString();
-                System.IO.File.Delete(initialize.加载路径 + "\\embeddings" + model_name);
+                System.IO.File.Delete(working_directory + "\\embeddings" + model_name);
 
                 EmbCollection.Clear();
-                var dir = new DirectoryInfo(initialize.加载路径 + "\\embeddings");
+                var dir = new DirectoryInfo(working_directory + "\\embeddings");
                 FileInfo[] files = dir.GetFiles();
 
                 foreach (FileInfo fInfo in files)
@@ -315,7 +317,7 @@ namespace Awake.Views.Pages
                     else if (tabs.SelectedIndex == 1)
                     {
                         EmbCollection.Clear();
-                        var dir = new DirectoryInfo(initialize.加载路径 + "\\embeddings");
+                        var dir = new DirectoryInfo(working_directory + "\\embeddings");
                         FileInfo[] files = dir.GetFiles();
 
                         foreach (FileInfo fInfo in files)
@@ -342,7 +344,7 @@ namespace Awake.Views.Pages
                     else if (tabs.SelectedIndex == 2)
                     {
                         HysCollection.Clear();
-                        var dir = new DirectoryInfo(initialize.加载路径 + "\\models\\hypernetworks");
+                        var dir = new DirectoryInfo(working_directory + "\\models\\hypernetworks");
                         FileInfo[] files = dir.GetFiles();
 
                         foreach (FileInfo fInfo in files)
@@ -369,7 +371,7 @@ namespace Awake.Views.Pages
                     else if (tabs.SelectedIndex == 3)
                     {
                         VaesCollection.Clear();
-                        var dir = new DirectoryInfo(initialize.加载路径 + "\\models\\vae");
+                        var dir = new DirectoryInfo(working_directory + "\\models\\vae");
                         FileInfo[] files = dir.GetFiles();
 
                         foreach (FileInfo fInfo in files)
@@ -396,7 +398,7 @@ namespace Awake.Views.Pages
                     else if (tabs.SelectedIndex == 4)
                     {
                         LorasCollection.Clear();
-                        var dir = new DirectoryInfo(initialize.加载路径 + "\\models\\lora");
+                        var dir = new DirectoryInfo(working_directory + "\\models\\lora");
                         FileInfo[] files = dir.GetFiles();
 
                         foreach (FileInfo fInfo in files)
@@ -429,7 +431,7 @@ namespace Awake.Views.Pages
         {
             try
             {
-                var dir = new DirectoryInfo(initialize.加载路径 + "\\models\\stable-diffusion\\");
+                var dir = new DirectoryInfo(working_directory + "\\models\\stable-diffusion\\");
                 FileInfo[] files = dir.GetFiles();
                 using (SHA256 mySHA256 = SHA256.Create())
                 {

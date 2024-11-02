@@ -27,13 +27,11 @@
                                 <GradientStop Color="#12FFFFFF" Offset="1"/>
                             </LinearGradientBrush>
                         </ui:Card.BorderBrush>
-                        <StackPanel Height="100">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="安装中心" FontSize="20" HorizontalAlignment="Left" Margin="10,0,0,0"/>
-                                <TextBlock x:Name="磁盘剩余显示" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,0,0,0"/>
+                        <StackPanel Height="65">
+                            <StackPanel Orientation="Horizontal" Height="73">
 
+                                <TextBlock x:Name="磁盘剩余显示" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,0,0,0"/>
                             </StackPanel>
-                            <TextBlock Text="在这里管理StableDiffusionWebUI的路径与位置|第三方整合包需单独在下方配置环境" FontSize="14" HorizontalAlignment="Left" Margin="10,15,0,0"/>
                         </StackPanel>
 
                     </ui:Card>

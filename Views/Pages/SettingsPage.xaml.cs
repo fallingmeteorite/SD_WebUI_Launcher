@@ -8,6 +8,14 @@ namespace Awake.Views.Pages
     /// </summary>
     public partial class SettingsPage : INavigableView<ViewModels.SettingsViewModel>
     {
+
+        public SettingsPage(ViewModels.SettingsViewModel viewModel)
+        {
+            ViewModel = viewModel;
+
+            InitializeComponent();
+        }
+
         public ViewModels.SettingsViewModel ViewModel
         {
             get;

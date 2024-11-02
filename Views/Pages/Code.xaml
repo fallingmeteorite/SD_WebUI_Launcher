@@ -70,7 +70,7 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                        <Button Content="安装此版本" Tag="{Binding Hash}" Click="setup_Click" Width="100" IsEnabled="{Binding Use_start}"/>
+                                        <Button Content="安装此版本" Tag="{Binding Hash}" Click="setup_Click" Width="100" IsEnabled="{Binding use_start}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

@@ -38,7 +38,7 @@ namespace Awake.ViewModels
 
         private void InitializeViewModel()
         {
-            ApplicationTitle = "光源AI绘画盒子    开源AI绘画辅助工具";
+            ApplicationTitle = "SD_Webui_Launcher";
 
             NavigationItems = new ObservableCollection<INavigationControl>
             {

@@ -103,8 +103,28 @@ namespace Awake.Views.Windows
             _GetModelDetals(_UUID);//开始执行异步任务
             LoadImageFromUrlAsync(imageURL, avatar);
         }
+
         async Task LoadImageFromUrlAsync(string imageUrl, string avatar)//开始加载模型封面图和作者头像
         {
+            
+            try
+            {
+                HttpClient client1 = new HttpClient();
+
+                var imageBytes1 = await client1.GetByteArrayAsync(avatar);
+                var image1 = new BitmapImage();
+                image1.BeginInit();
+                image1.CacheOption = BitmapCacheOption.OnLoad;
+                image1.CreateOptions = BitmapCreateOptions.DelayCreation;
+                image1.StreamSource = new MemoryStream(imageBytes1);
+                image1.EndInit();
+                作者头像.ImageSource = image1;
+            }
+            catch (Exception error)
+            {
+                File.WriteAllText(@".\logs\error.txt", error.Message.ToString());
+            }
+
             try
             {
                 HttpClient client1 = new HttpClient();
@@ -124,23 +144,7 @@ namespace Awake.Views.Windows
             {
                 File.WriteAllText(@".\logs\error.txt", error.Message.ToString());
             }
-            try
-            {
-                HttpClient client1 = new HttpClient();
 
-                var imageBytes1 = await client1.GetByteArrayAsync(avatar);
-                var image1 = new BitmapImage();
-                image1.BeginInit();
-                image1.CacheOption = BitmapCacheOption.OnLoad;
-                image1.CreateOptions = BitmapCreateOptions.DelayCreation;
-                image1.StreamSource = new MemoryStream(imageBytes1);
-                image1.EndInit();
-                作者头像.ImageSource = image1;
-            }
-            catch (Exception error)
-            {
-                File.WriteAllText(@".\logs\error.txt", error.Message.ToString());
-            }
         }
         async Task _GetModelDetals(string uuid)
         {

@@ -38,21 +38,26 @@ namespace Awake.Views.Windows
     {
         private string currExt;
         private string currHash;
-        public static string branch_name = "";
-        private List<ExtTagItem> tags;
-        public List<CommitItem> commits;
-        public ObservableCollection<CommitItem> CommiteCollection = new();
-        public ObservableCollection<CommitItem> CommiteTagCollection = new();
+        private string branch_name = "";
+        private string git_path_use = "";
+        private string working_directory = "";
         private string giturl;
+
+        private List<ExtTagItem> tags;
+        private List<CommitItem> commits;
+
+        private ObservableCollection<CommitItem> CommiteCollection = new();
+        private ObservableCollection<CommitItem> CommiteTagCollection = new();
+     
 
         public VerManager(string giturl, string ext)
         {
 
-            if (initialize.启用自定义路径)
+            if (initialize.enable_custom_path)
             {
-                initialize.加载路径 = initialize.本地路径;
-                initialize.gitPath_use = initialize.gitPath;
-                if (!File.Exists(initialize.gitPath_use))
+                working_directory = initialize.本地路径;
+                git_path_use = initialize.git_path;
+                if (!File.Exists(git_path_use))
                 {
                     System.Windows.MessageBox.Show("自定义GIT路径错误或未选择，程序错误即将关闭！");
                     Process.GetCurrentProcess().Kill();
@@ -60,9 +65,9 @@ namespace Awake.Views.Windows
             }
             else
             {
-                initialize.加载路径 = initialize.工作路径;
-                initialize.gitPath_use = initialize.工作路径 + @"\GIT\mingw64\bin\git.exe";
-                if (!File.Exists(initialize.gitPath_use))
+                working_directory = initialize.工作路径;
+                git_path_use = initialize.工作路径 + @"\GIT\mingw64\bin\git.exe";
+                if (!File.Exists(git_path_use))
                 {
                     System.Windows.MessageBox.Show("工作路径下即整合包未存在GIT，程序错误即将关闭！");
                     Process.GetCurrentProcess().Kill();
@@ -77,13 +82,13 @@ namespace Awake.Views.Windows
 
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use;
+            startInfo.FileName = git_path_use;
             startInfo.Arguments = " rev-parse --abbrev-ref HEAD";
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
             startInfo.RedirectStandardError = false;
             startInfo.CreateNoWindow = true;
-            startInfo.WorkingDirectory = initialize.加载路径;
+            startInfo.WorkingDirectory = working_directory;
 
             process.StartInfo = startInfo;
             process.Start();
@@ -100,7 +105,7 @@ namespace Awake.Views.Windows
 
             process = new Process();
             startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use;
+            startInfo.FileName = git_path_use;
             startInfo.Arguments = " log --oneline --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
@@ -116,7 +121,7 @@ namespace Awake.Views.Windows
 
             process = new Process();
             startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use;
+            startInfo.FileName = git_path_use;
             startInfo.Arguments = "  remote -v";
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
@@ -147,7 +152,7 @@ namespace Awake.Views.Windows
             var jsonOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web);
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use;
+            startInfo.FileName = git_path_use;
             startInfo.Arguments = $"  --no-pager log {branch_name} --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 150";
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
@@ -179,12 +184,12 @@ namespace Awake.Views.Windows
                 item1.Message = itemarr[1];
                 item1.Date = itemarr[2];
                 item1.Id = idx++;
-                item1.Use_start = true;
+                item1.use_start = true;
                 item1.Checked = false;
 
                 if (currHash == item1.Hash)
                 {
-                    item1.Use_start = false;
+                    item1.use_start = false;
                     item1.Checked = true;
                 }
 
@@ -211,8 +216,8 @@ namespace Awake.Views.Windows
 
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use;
-            startInfo.Arguments = " checkout " + hash;
+            startInfo.FileName = git_path_use;
+            startInfo.Arguments = $" reset --hard {hash}"; //回退版本到
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
             startInfo.CreateNoWindow = true;
@@ -227,7 +232,7 @@ namespace Awake.Views.Windows
 
             process = new Process();
             startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use;
+            startInfo.FileName = git_path_use;
             startInfo.Arguments = " log --oneline --pretty=\"%h^^%s^^%cd\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n 1";
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
@@ -243,7 +248,7 @@ namespace Awake.Views.Windows
 
             process = new Process();
             startInfo = new ProcessStartInfo();
-            startInfo.FileName = initialize.gitPath_use;
+            startInfo.FileName = git_path_use;
             startInfo.Arguments = " remote -v";
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;

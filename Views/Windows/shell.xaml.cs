@@ -9,7 +9,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using Wpf.Ui.Controls;
-using static Awake.initialize;//这里引入全局参数库
 namespace Awake.Views.Windows
 {
     public partial class shell : UiWindow
@@ -29,7 +28,7 @@ namespace Awake.Views.Windows
         public shell()
         {
             InitializeComponent();
-            if (_SD启动 == true)
+            if (initialize._SD启动 == true)
             {
                 this.WindowState = WindowState.Maximized;
                 _loadpage();
@@ -41,7 +40,7 @@ namespace Awake.Views.Windows
                 背景淡出.Visibility = Visibility.Collapsed;
             }
             GetSystemInfo();
-            参数列表 = "";
+            initialize.参数列表 = "";
             async Task _loadpage()
             {
                 // 加载页的背景图计时器
@@ -106,41 +105,41 @@ namespace Awake.Views.Windows
                 标准输出流.AppendText("系统名称：" + Machinename + "   系统类型：" + systemType + Environment.NewLine);
                 标准输出流.AppendText("内存信息：" + memorynum + " 插槽" + "  共计" + memorysize + " GB" + Environment.NewLine);
                 标准输出流.AppendText("显卡信息：" + gpuname + Environment.NewLine);
-                标准输出流.AppendText("当前使用的生成引擎：" + _GPUname + Environment.NewLine);
+                标准输出流.AppendText("当前使用的生成引擎：" + initialize._GPUname + Environment.NewLine);
                 标准输出流.AppendText("正在运行，请耐心等待，运行速度由电脑性能决定\n");
 
             }
             //这里开始从initilize中被处理过的参数变量进行初始化
 
-            if (浏览器启动 == true) { 参数列表 += " --autolaunch"; }
+            if (initialize.浏览器启动 == true) { initialize.参数列表 += " --autolaunch"; }
 
-            if (关闭模型hash计算 == true) { 参数列表 += " --no-hashing "; }
+            if (initialize.关闭模型hash计算 == true) { initialize.参数列表 += " --no-hashing "; }
 
-            if (启动api == true) { 参数列表 += " --api"; }
+            if (initialize.启动api == true) { initialize.参数列表 += " --api"; }
 
-            if (快速启动 == true) { 参数列表 += " --ui-debug-mode --disable-safe-unpickle "; }
+            if (initialize.快速启动 == true) { initialize.参数列表 += " --ui-debug-mode --disable-safe-unpickle "; }
 
-            if (分享WebUI到公网 == true) { 参数列表 += " --share"; }
+            if (initialize.分享WebUI到公网 == true) { initialize.参数列表 += " --share"; }
 
-            if (使用CPU进行推理 == true) { 参数列表 = " --use-cpu all --precision full --no-half --skip-torch-cuda-test"; }
+            if (initialize.使用CPU进行推理 == true) { initialize.参数列表 = " --use-cpu all --precision full --no-half --skip-torch-cuda-test"; }
 
-            if (启用InvokeAI == true) { 参数列表 = " --opt-split-attention-invokeai"; }
+            if (initialize.启用InvokeAI == true) { initialize.参数列表 = " --opt-split-attention-invokeai"; }
 
-            if (上投采样 == true) { 参数列表 = " --upcast-sampling"; }
+            if (initialize.上投采样 == true) { initialize.参数列表 = " --upcast-sampling"; }
 
-            if (启用替代布局 == true) { 参数列表 += " --opt-channelslast "; }
+            if (initialize.启用替代布局 == true) { initialize.参数列表 += " --opt-channelslast "; }
 
-            if (缩放点积 == true) { 参数列表 += " --opt-sdp-attention --opt-sdp-no-mem-attention"; }
+            if (initialize.缩放点积 == true) { initialize.参数列表 += " --opt-sdp-attention --opt-sdp-no-mem-attention"; }
 
-            if (启用xformers == true) { 参数列表 += " --xformers --xformers-flash-attention --force-enable-xformers"; }
+            if (initialize.启用xformers == true) { initialize.参数列表 += " --xformers --xformers-flash-attention --force-enable-xformers"; }
 
-            if (关闭半精度计算 == true) { 参数列表 += " --no-half"; }
+            if (initialize.关闭半精度计算 == true) { initialize.参数列表 += " --no-half"; }
 
-            if (内存优化 == true) { 参数列表 += " --opt-sub-quad-attention"; }
+            if (initialize.内存优化 == true) { initialize.参数列表 += " --opt-sub-quad-attention"; }
 
-            if (冻结设置 == true) { 参数列表 += " --freeze-settings"; }
+            if (initialize.冻结设置 == true) { initialize.参数列表 += " --freeze-settings"; }
 
-            if (Doggettx优化 == true) { 参数列表 += " --opt-split-attention"; }
+            if (initialize.Doggettx优化 == true) { initialize.参数列表 += " --opt-split-attention"; }
 
 
 
@@ -152,29 +151,19 @@ namespace Awake.Views.Windows
                 //下面开始施法！！！！
                 启动魔法 = new Process();
                 ProcessStartInfo startinfo = new ProcessStartInfo();
-                string 启动参数 = 参数列表;
+                string 启动参数 = initialize.参数列表;
 
-                try
-                {
-                    venvPath = File.ReadAllText(@".AI_launther_log\venvpath.txt");
-                    gitPath = File.ReadAllText(@".AI_launther_log\gitpath.txt");
-                }
-                catch
-                {
-                    venvPath = "";
-                    gitPath = "";
-                }
-
-                if (启用自定义路径 == true)
+               
+                if (initialize.enable_custom_path == true)
                 {
 
-                    工作路径_start = 本地路径;
-                    startinfo.FileName = (venvPath);         
+                    工作路径_start = initialize.本地路径;
+                    startinfo.FileName = (initialize.venv_path);         
 
-                    if (显卡类型名 == "NVIDIA")
+                    if (initialize.显卡类型名 == "NVIDIA")
                     {
 
-                        启动参数 += " --device - id " + (_UseGPUindex - 1);
+                        启动参数 += " --device - id " + (initialize._UseGPUindex - 1);
 
                     }
                     else
@@ -186,13 +175,13 @@ namespace Awake.Views.Windows
                     }
 
 
-                    标准输出流.AppendText(工作路径_start + @"\launch.py" + 启动参数 + _WebUI显存压力优化设置 + _WebUI主题颜色 + "\n");
-                    startinfo.Arguments = 工作路径_start + @"\launch.py" + 参数列表 + _WebUI显存压力优化设置 + _WebUI主题颜色;
+                    标准输出流.AppendText(工作路径_start + @"\launch.py" + 启动参数 + initialize._WebUI显存压力优化设置 + initialize._WebUI主题颜色 + "\n");
+                    startinfo.Arguments = 工作路径_start + @"\launch.py" + initialize.参数列表 + initialize._WebUI显存压力优化设置 + initialize._WebUI主题颜色;
                     startinfo.WorkingDirectory = 工作路径_start;
 
                     // 设置临时环境变量  
                     startinfo.EnvironmentVariables["TF_CPP_MIN_LOG_LEVEL"] = "3";//屏蔽Tensorflow中的Warning
-                    startinfo.EnvironmentVariables["GIT"] = gitPath;//保证WenUI可以使用到git
+                    startinfo.EnvironmentVariables["GIT"] = initialize.git_path;//保证WenUI可以使用到git
                     startinfo.EnvironmentVariables["GIT_PYTHON_REFRESH"] = "quiet";
                     startinfo.EnvironmentVariables["GIT_SSL_NO_VERIFY"] = "true";
                     startinfo.EnvironmentVariables["HF_ENDPOINT"] = "https://hf-mirror.com";
@@ -219,17 +208,17 @@ namespace Awake.Views.Windows
                 else
                 {
 
-                    工作路径_start = 工作路径;
+                    工作路径_start = initialize.工作路径;
 
-                    标准输出流.AppendText(工作路径_start + @"\launch.py" + 参数列表 + _WebUI显存压力优化设置 + _WebUI主题颜色 + "\n");
+                    标准输出流.AppendText(工作路径_start + @"\launch.py" + initialize.参数列表 + initialize._WebUI显存压力优化设置 + initialize._WebUI主题颜色 + "\n");
                     startinfo.FileName = 工作路径_start + @"\Python\python.exe";
-                    startinfo.Arguments = 工作路径_start + @"\launch.py" + 参数列表 + _WebUI显存压力优化设置 + _WebUI主题颜色;
+                    startinfo.Arguments = 工作路径_start + @"\launch.py" + initialize.参数列表 + initialize._WebUI显存压力优化设置 + initialize._WebUI主题颜色;
                     startinfo.WorkingDirectory = 工作路径_start;
 
-                    if (显卡类型名 == "NVIDIA")
+                    if (initialize.显卡类型名 == "NVIDIA")
                     {
 
-                        启动参数 += " --device - id " + (_UseGPUindex - 1);
+                        启动参数 += " --device - id " + (initialize._UseGPUindex - 1);
 
                     }
 

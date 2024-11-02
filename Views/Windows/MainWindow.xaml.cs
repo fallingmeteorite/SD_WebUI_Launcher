@@ -279,7 +279,7 @@ namespace Awake.Views.Windows
                 initialize.关闭模型hash计算 + "\n" +
                 initialize.冻结设置 + "\n" +
                 initialize.快速启动 + "\n" +
-                initialize.启用自定义路径 + "\n" +
+                initialize.enable_custom_path + "\n" +
 
                 initialize.上投采样 + "\n" +
                 initialize.关闭半精度计算 + "\n" +
