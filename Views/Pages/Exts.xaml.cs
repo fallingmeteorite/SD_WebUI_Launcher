@@ -112,18 +112,11 @@ namespace Awake.Views.Pages
         }
         private void verManager_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Button btn = (Button)sender;
-                int idx = int.Parse(btn.Tag.ToString());
+            Button btn = (Button)sender;
+            int idx = int.Parse(btn.Tag.ToString());
 
-                VerManager ma = new VerManager(Store.extLocal[idx].GitUrl, Store.extLocal[idx].Path);
-                ma.Show();
-            }
-            catch
-            {
-                System.Windows.MessageBox.Show("获取失败,可能是插件问题");
-            }
+            VerManager ma = new VerManager(Store.extLocal[idx].GitUrl, Store.extLocal[idx].Path);
+            ma.Show();
 
         }
         private void Refresh_Click(object sender, RoutedEventArgs e)

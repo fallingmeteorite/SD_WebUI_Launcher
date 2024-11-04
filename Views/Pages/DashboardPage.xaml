@@ -6,7 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="DashboardPage"
-     Loaded="firstloded"
 
     xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
     d:DataContext="{d:DesignInstance local:DashboardPage, IsDesignTimeCreatable=False}"
@@ -243,13 +242,6 @@
 
             </Grid>
         </ScrollViewer>
-
-        <StackPanel   x:Name="搜索栏2"   Height="60"  HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Visible" >
-
-            <StackPanel Height="60" Width="1000" HorizontalAlignment="Center"/>
-
-
-        </StackPanel>
 
     </Grid>
 </ui:UiPage>

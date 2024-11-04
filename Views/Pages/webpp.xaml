@@ -192,13 +192,8 @@
                         <StackPanel Margin="0,-58,0,60" Orientation="Horizontal" Visibility="Visible">
                             <ui:CardAction x:Name="Git路径选择" VerticalAlignment="Stretch" Click="Git路径选择_Click" Width="932" Height="75" Margin="0,0,10,0"  >
                                 <StackPanel Orientation="Horizontal">
-                                    <Canvas Width="40" Height="40" >
-                                        <Canvas.Background>
-                                            <ImageBrush Stretch="Uniform" ImageSource="/Assets/git_logo.png">
-
-                                            </ImageBrush>
-                                        </Canvas.Background>
-                                    </Canvas>
+                                    <TextBlock TextWrapping="Wrap" Text="&#xE8B1;" FontFamily="Segoe MDL2 Assets"   FontSize="36" FontWeight="Bold">
+                                    </TextBlock>
                                     <StackPanel Margin="15,0,0,0" Width="350">
                                         <TextBlock Text="配置Git路径"   FontSize="16" Margin="0,0,0,5"/>
                                         <TextBlock Text="路径下必须有git.exe文件夹" FontSize="12"/>

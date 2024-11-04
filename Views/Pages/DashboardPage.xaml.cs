@@ -68,10 +68,7 @@ namespace Awake.Views.Pages
         string programpath = System.Windows.Forms.Application.StartupPath.Substring(0, System.Windows.Forms.Application.StartupPath.IndexOf(':'));
         //获取执行文件所在盘符
 
-        private void firstloded(object sender, RoutedEventArgs e)
-        {
-            搜索栏2.Visibility = Visibility.Collapsed;
-        }
+       
         private void 打开WebUI文件夹_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Process.Start("explorer.exe", initialize.工作路径);
